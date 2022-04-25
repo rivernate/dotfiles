@@ -1,0 +1,83 @@
+" Enable file detection and auto indentation by filetype
+filetype indent plugin on
+ 
+" Enable syntax highlighting
+syntax on
+ 
+ 
+" Improved command-line completion
+set wildmenu
+ 
+" Show commands 
+set showcmd
+ 
+" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
+" mapping of <C-L> below)
+set hlsearch
+ 
+" Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
+ 
+" When opening a new line and no filetype-specific indenting is enabled, keep
+" the same indent as the line you're currently on. Useful for READMEs, etc.
+set autoindent
+ 
+" Display the cursor position on the last line of the screen or in the status
+" line of a window
+set ruler
+ 
+" Always display the status line
+set laststatus=2
+ 
+" Prompt to save changes instead of failing a command
+set confirm
+ 
+" Use visual bell
+set visualbell
+ 
+" Set the command window height to 2 lines, to avoid many cases of having to
+" "press <Enter> to continue"
+set cmdheight=2
+ 
+" Display line numbers on the left
+set number
+ 
+ 
+" Indentation settings for using 4 spaces instead of tabs.
+" Do not change 'tabstop' from its default value of 8 with this setup.
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+" https://github.com/junegunn/vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin('~/.vim/plugged')
+" Make sure you use single quotes
+
+Plug 'flazz/vim-colorschemes'
+
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
+
+Plug 'ekalinin/dockerfile.vim'
+
+Plug 'lervag/vimtex'
+
+" Initialize plugin system
+call plug#end()
+
+" Autostart NERDTree if no file is specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Set colorscheme
+colorscheme molokai_dark
+hi Normal guibg=NONE ctermbg=NONE

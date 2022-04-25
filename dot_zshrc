@@ -1,0 +1,226 @@
+source ~/.env_vars
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+export LANG="en_US.UTF-8"
+export SHELL="/usr/bin/zsh"
+
+# Setup history
+HISTFILE=~/.zsh_history
+
+# enable auto complete
+autoload -Uz compinit
+compinit
+
+# menu driven auto complete
+zstyle ':completion:*' menu select
+
+# autocomplete aliases
+setopt COMPLETE_ALIASES
+
+#Prompt Theme System
+autoload -Uz promptinit
+
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -g -A key
+
+key[Home]="$terminfo[khome]"
+key[End]="$terminfo[kend]"
+key[Insert]="$terminfo[kich1]"
+key[Backspace]="$terminfo[kbs]"
+key[Delete]="$terminfo[kdch1]"
+key[Up]="$terminfo[kcuu1]"
+key[Down]="$terminfo[kcud1]"
+key[Left]="$terminfo[kcub1]"
+key[Right]="$terminfo[kcuf1]"
+key[PageUp]="$terminfo[kpp]"
+key[PageDown]="$terminfo[knp]"
+
+# setup key accordingly
+[[ -n "$key[Home]"      ]] && bindkey -- "$key[Home]"      beginning-of-line
+[[ -n "$key[End]"       ]] && bindkey -- "$key[End]"       end-of-line
+[[ -n "$key[Insert]"    ]] && bindkey -- "$key[Insert]"    overwrite-mode
+[[ -n "$key[Backspace]" ]] && bindkey -- "$key[Backspace]" backward-delete-char
+[[ -n "$key[Delete]"    ]] && bindkey -- "$key[Delete]"    delete-char
+[[ -n "$key[Up]"        ]] && bindkey -- "$key[Up]"        up-line-or-history
+[[ -n "$key[Down]"      ]] && bindkey -- "$key[Down]"      down-line-or-history
+[[ -n "$key[Left]"      ]] && bindkey -- "$key[Left]"      backward-char
+[[ -n "$key[Right]"     ]] && bindkey -- "$key[Right]"     forward-char
+
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+    function zle-line-init () {
+        echoti smkx
+    }
+    function zle-line-finish () {
+        echoti rmkx
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
+fi
+
+[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
+[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
+
+##
+# Start Antigen Block
+##
+#
+source /usr/share/zsh/share/antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle git
+antigen bundle command-not-found
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# History substring search
+antigen bundle zsh-users/zsh-history-substring-search
+
+# Auto Suggestions
+antigen bundle zsh-users/zsh-autosuggestions
+
+#NVM plugin
+antigen bundle lukechilds/zsh-nvm
+
+#RBENV plugin
+antigen bundle rbenv
+
+#PYENV plugin
+# antigen bundle pyenv ## waiting til it is updated
+
+# Tell Antigen that you're done.
+antigen apply
+
+##
+# End Antigen Block
+##
+
+##
+# Setup keybindings for History search
+##
+[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   history-substring-search-up
+[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" history-substring-search-down
+
+##
+# Powerlevel 10k
+##
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+##
+# Create home log dir
+##
+mkdir -p ~/.log
+
+##
+# GPG Agent
+##
+if [[ -f ~/.local/bin/gpg-wsl.sh ]]; then
+         source ~/.local/bin/gpg-wsl.sh &>> ~/.log/gpg-wsl.log &
+ elif [[ -f  ~/.local/bin/gpg-agent-relay.sh ]]; then
+	 ~/.local/bin/gpg-agent-relay.sh &>> ~/.logs/gpg-agent-relay.log &
+ else
+         export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+	 export GPG_TTY="$(tty)"
+	 if ! pgrep -x -u "$USER" gpg-agent > /dev/null
+	 then
+	 	 command gpgconf --launch gpg-agent > /dev/null
+	 fi
+	 gpg-connect-agent updatestartuptty /bye > /dev/null
+fi
+##
+# End GPG Agent
+##
+
+##
+# Aliases
+##
+
+alias dc=docker-compose
+alias dcr="docker-compose run --rm"
+
+##
+# End of Aliases
+##
+
+##
+# direnv (direnv.net)
+##
+eval "$(direnv hook zsh)"
+
+autoload -U +X bashcompinit && bashcompinit
+
+
+##
+# AWS Summon gopass
+##
+aws_shell() {                         
+ summon -p gopass -f $XDG_CONFIG_HOME/aws_shell/$1.yml aws_login.sh
+}
+
+show_virtual_env() {
+  if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
+    echo "($(basename $VIRTUAL_ENV))"
+  fi
+}
+PS1='$(show_virtual_env)'$PS1
+
+##
+# Rapture shell integration
+# https://github.com/daveadams/go-rapture
+##
+if type "rapture" > /dev/null; then
+  eval "$( command rapture shell-init )"
+fi
+
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# SBT Config
+export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
+
+# specify alias for SSH to set TERM env var
+alias ssh='TERM=xterm-256color ssh'
+
+# pulsarctl completion
+fpath=($fpath ~/.zsh/completion)
+
+# setup rbenv
+eval "$(rbenv init -)"
+
+
+# setup hombrew
+if type "~/.linuxbrew/bin/brew" > /dev/null; then
+  eval $(~/.linuxbrew/bin/brew shellenv)
+fi
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="~/.sdkman"
+[[ -s "~/.sdkman/bin/sdkman-init.sh" ]] && source "~/.sdkman/bin/sdkman-init.sh"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+

@@ -1,0 +1,17 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+[alias]
+	co = checkout
+	ci = commit
+	rb = rebase
+[push]
+	default = current
+[core]
+	excludesfile = ~/.gitignore_global
+[include]
+        path = ~/.gitconfigoverride
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main

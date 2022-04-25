@@ -1,0 +1,13 @@
+*.iws
+*.ipr
+*.iml
+.idea
+.ruby-version
+.byebug_history
+docker-compose.nate.yml
+.rbenv-gemsets
+
+# Direnv stuff
+.direnv
+.envrc
+.env
