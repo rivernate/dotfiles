@@ -7,7 +7,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export LANG="en_US.UTF-8"
-export SHELL="/usr/bin/zsh"
 
 # Setup history
 HISTFILE=~/.zsh_history
@@ -72,7 +71,11 @@ fi
 # Start Antigen Block
 ##
 #
-source /usr/share/zsh/share/antigen.zsh
+if [ -f /usr/share/zsh/share/antigen.zsh ]; then
+  source /usr/share/zsh/share/antigen.zsh
+elif [ -f /usr/local/share/antigen/antigen.zsh ]; then
+  source /usr/local/share/antigen/antigen.zsh
+fi
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -96,6 +99,9 @@ antigen bundle lukechilds/zsh-nvm
 #RBENV plugin
 antigen bundle rbenv
 
+#P10k theme
+antigen theme romkatv/powerlevel10k
+
 #PYENV plugin
 # antigen bundle pyenv ## waiting til it is updated
 
@@ -115,7 +121,7 @@ antigen apply
 ##
 # Powerlevel 10k
 ##
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+#source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 ##
 # Create home log dir
