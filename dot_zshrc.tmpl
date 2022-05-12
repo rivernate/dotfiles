@@ -119,11 +119,6 @@ antigen apply
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" history-substring-search-down
 
 ##
-# Powerlevel 10k
-##
-#source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-
-##
 # Create home log dir
 ##
 mkdir -p ~/.log
@@ -217,6 +212,23 @@ fpath=($fpath ~/.zsh/completion)
 # setup rbenv
 eval "$(rbenv init -)"
 
+{{ if eq .chezmoi.os "darwin" -}}
+
+###########################
+# OSX specific setup
+###########################
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nathanmills/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+###########################
+# End OSX specific setup
+###########################
+
+{{ end -}}
 
 # setup hombrew
 if type "~/.linuxbrew/bin/brew" > /dev/null; then

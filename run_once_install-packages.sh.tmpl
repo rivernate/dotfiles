@@ -10,6 +10,6 @@ yay -S antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git
 {{ if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
 /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install rbenv antigen direnv gnupg gnupg2
+brew install rbenv antigen direnv gnupg gnupg2 wget
 
 {{ end -}}
