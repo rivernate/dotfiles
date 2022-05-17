@@ -11,5 +11,8 @@ yay -S antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git
 #!/usr/bin/env bash
 /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install rbenv antigen direnv gnupg gnupg2 wget
-
+brew install --cask iterm2
+curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
 {{ end -}}
+curl https://cht.sh/:cht.sh > ~/.local/bin/cht.sh
+chmod +x ~/.local/bin/cht.sh
