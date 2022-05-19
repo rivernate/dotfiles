@@ -5,6 +5,13 @@ sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/ya
 cd ~/ && rm -rf ~/yay-bin
 yay
 yay -Scc --needed antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git vim zsh zsh-theme-powerlevel10k-git openssh
+
+shell=$(pinky -l $USER|grep -oP 'Shell: \K.*')
+if [ $shell != "/bin/zsh" ]
+then
+  chsh -s /bin/zsh
+  echo "Shell changed to ZSH you need to logout and log back in"
+fi
 {{ end -}}
 {{ end -}}
 {{ if eq .chezmoi.os "darwin" -}}
