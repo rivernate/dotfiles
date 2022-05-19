@@ -2,9 +2,9 @@
 {{ if eq .chezmoi.osRelease.id "arch" -}}
 #!/usr/bin/env bash
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si
-cd .. && rmdir -rf yay-bin
+cd ~/ && rm -rf ~/yay-bin
 yay
-yay -S antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git vim zsh zsh-theme-powerlevel10k-git openssh
+yay -Scc --needed antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git vim zsh zsh-theme-powerlevel10k-git openssh
 {{ end -}}
 {{ end -}}
 {{ if eq .chezmoi.os "darwin" -}}
