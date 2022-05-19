@@ -14,4 +14,4 @@ export JAVA_HOME="/usr/lib/jvm/default"
 export SUMMON_PROVIDER="gopass"
 export _JAVA_AWT_WM_NONREPARENTING="1"
 export DOCKER_BUILDKIT=1
-export PATH="$PATH:$HOME/go/bin:$HOME:$HOME_LOCAL/bin:$RBENV_ROOT/shims:$PYENV_ROOT/bin:$TFENV_BIN:$CARGO_BIN"
+export PATH="$PATH:$HOME/go/bin:$HOME/bin:$HOME_LOCAL/bin:$RBENV_ROOT/shims:$PYENV_ROOT/bin:$TFENV_BIN:$CARGO_BIN"
