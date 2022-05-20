@@ -26,5 +26,5 @@ feh --bg-max --randomize ~/.wallpaper/*
 dunst &
 export SXHKD_SHELL="sh"
 
-exec sxhkd -r ~/sxhkd.log &
+exec sxhkd -r ~/.log/sxhkd.log &
 ~/.config/polybar/launch.sh
