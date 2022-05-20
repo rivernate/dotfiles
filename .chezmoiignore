@@ -1,1 +1,7 @@
 README.md
+{{- if not .bspwm }}
+.config/alacritty
+.config/bspwm
+.config/polybar
+.config/sxhkd
+{{- end }}

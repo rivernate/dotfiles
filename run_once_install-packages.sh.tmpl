@@ -15,6 +15,11 @@ then
   chsh -s /bin/zsh
   echo "Shell changed to ZSH you need to logout and log back in"
 fi
+
+{{ if .bspwm -}}
+yay -Scc --needed bspwm sxhkd rofi alacritty picom dunst polybar xcursor-vanilla-dmz arandr pavucontrol lightdm lightdm-gtk-greeter nerd-fonts-complete feh noto-fonts zsh-theme-powerlevel10k-git gtk2 nerd-fonts-complete libfido2 ccid opensc google-chrome
+
+{{ end -}}
 {{ end -}}
 {{ end -}}
 {{ if eq .chezmoi.os "darwin" -}}
