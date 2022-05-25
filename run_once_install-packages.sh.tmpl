@@ -31,6 +31,7 @@ sudo "$(which nb)" env install
 {{ if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
 /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install rbenv antigen direnv gnupg gnupg2 wget
+brew tap xwmx/taps
+brew install rbenv antigen direnv gnupg gnupg2 wget bat nmap pandoc ripgrep tig w3m ack catimg exa ripgrep-all nb
 
 {{ end -}}
