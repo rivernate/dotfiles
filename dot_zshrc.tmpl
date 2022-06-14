@@ -71,6 +71,10 @@ fi
 # Start Antigen Block
 ##
 #
+{{ if eq .chezmoi.os "darwin" -}}
+source $(brew --prefix)/share/antigen/antigen.zsh
+{{- end }}
+
 if [ -f /usr/share/zsh/share/antigen.zsh ]; then
   source /usr/share/zsh/share/antigen.zsh
 elif [ -f /usr/local/share/antigen/antigen.zsh ]; then
