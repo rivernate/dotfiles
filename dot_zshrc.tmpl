@@ -236,7 +236,7 @@ if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc' ]; th
 
 {{- end }}
 
-{{ if eq .chezmoi.osRelease.id "arch" -}}
+{{ if eq (index .chezmoi.osRelease "id" ) "arch" -}}
 # setup yay helpers
 autoload -Uz yay-needed yay-sync
 {{- end }}

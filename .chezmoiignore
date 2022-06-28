@@ -5,7 +5,7 @@ README.md
 .config/polybar
 .config/sxhkd
 {{- end }}
-{{ if ne .chezmoi.osRelease.id "arch" -}}
+{{ if ne (index .chezmoi.osRelease "id") "arch" -}}
 .config/yay/pkglist.txt
 {{- end }}
 {{- if ne .chezmoi.os "darwin" }}
