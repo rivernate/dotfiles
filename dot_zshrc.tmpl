@@ -154,6 +154,8 @@ fi
 alias dc=docker-compose
 alias dcr="docker-compose run --rm"
 alias tf="terraform"
+alias vim="nvim"
+alias vi="nvim"
 
 ##
 # End of Aliases
@@ -211,8 +213,7 @@ export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
 # specify alias for SSH to set TERM env var
 alias ssh='TERM=xterm-256color ssh'
 
-# pulsarctl completion
-fpath=($fpath ~/.zsh/completion)
+fpath=(~/.zsh/completion ~/.zsh/funcs $fpath)
 
 # setup rbenv
 eval "$(rbenv init -)"
@@ -233,16 +234,12 @@ if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc' ]; th
 # End OSX specific setup
 ###########################
 
-{{ end -}}
+{{- end }}
 
-# setup hombrew
-if type "~/.linuxbrew/bin/brew" > /dev/null; then
-  eval $(~/.linuxbrew/bin/brew shellenv)
-fi
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="~/.sdkman"
-[[ -s "~/.sdkman/bin/sdkman-init.sh" ]] && source "~/.sdkman/bin/sdkman-init.sh"
+{{ if eq .chezmoi.osRelease.id "arch" -}}
+# setup yay helpers
+autoload -Uz yay-needed yay-sync
+{{- end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
