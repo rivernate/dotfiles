@@ -1,20 +1,16 @@
 export HOME_LOCAL="$HOME/.local"
-export RBENV_ROOT="$HOME/.rbenv"
-export PYENV_ROOT="$HOME/.pyenv"
 export NVM_LAZY_LOAD="true"
-export NVM_DIR="$HOME/.nvm"
-export TFENV_BIN="$HOME/.tfenv/bin"
 export CARGO_BIN="$HOME/.cargo/bin"
 export XDG_CONFIG_HOME="$HOME/.config"
 export SSH_AGENT_PID=""
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 export EDITOR="/usr/bin/vim"
-export VISUAL="vim"
+export VISUAL="nvim"
 export JAVA_HOME={{ if eq .chezmoi.os "darwin" }}"/Library/Java/Home"{{ else }}"/usr/lib/jvm/default"{{ end }}
 export SUMMON_PROVIDER="gopass"
 export _JAVA_AWT_WM_NONREPARENTING="1"
 export DOCKER_BUILDKIT=1
-export PATH="$PATH:$HOME/go/bin:$HOME/bin:$HOME_LOCAL/bin:$RBENV_ROOT/shims:$PYENV_ROOT/bin:$TFENV_BIN:$CARGO_BIN"
+export PATH="$PATH:$HOME/go/bin:$HOME/bin:$HOME_LOCAL/bin:$CARGO_BIN"
 {{- if eq .chezmoi.os "darwin" }}
 export HOMEBREW_BUNDLE_FILE="$HOME/.config/brewfile/Brewfile"
 {{ end -}}
