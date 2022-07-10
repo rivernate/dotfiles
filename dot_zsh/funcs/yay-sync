@@ -1,0 +1,6 @@
+
+yay-sync () {
+  yay-needed $(cat ~/.config/yay/pkglist.txt)
+}
+
+yay-sync
