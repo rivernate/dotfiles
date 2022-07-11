@@ -7,6 +7,7 @@ README.md
 {{- end }}
 {{ if ne (index .chezmoi.osRelease "id") "arch" -}}
 .config/yay/pkglist.txt
+.zsh/funcs/yay*
 {{- end }}
 {{- if ne .chezmoi.os "darwin" }}
 .config/brewfile/Brewfile
