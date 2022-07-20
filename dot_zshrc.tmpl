@@ -97,17 +97,8 @@ antigen bundle zsh-users/zsh-history-substring-search
 # Auto Suggestions
 antigen bundle zsh-users/zsh-autosuggestions
 
-#NVM plugin
-antigen bundle lukechilds/zsh-nvm
-
-#RBENV plugin
-antigen bundle rbenv
-
 #P10k theme
 antigen theme romkatv/powerlevel10k
-
-#PYENV plugin
-# antigen bundle pyenv ## waiting til it is updated
 
 # Tell Antigen that you're done.
 antigen apply
@@ -235,6 +226,20 @@ if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc' ]; th
 ###########################
 
 {{- end }}
+
+###########################
+# Setup asdf
+###########################
+
+{{ if eq .chezmoi.os "darwin" -}}
+. $(brew --prefix asdf)/libexec/asdf.sh
+. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+{{- end }}
+. ~/.asdf/plugins/java/set-java-home.zsh
+
+###########################
+# End asdf setup
+###########################
 
 {{ if eq (index .chezmoi.osRelease "id" ) "arch" -}}
 # setup yay helpers

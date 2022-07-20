@@ -29,5 +29,6 @@ return require("packer").startup(function()
   use "gruvbox-community/gruvbox"
   use "prettier/vim-prettier"
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
+  use "williamboman/nvim-lsp-installer"
 end)
 

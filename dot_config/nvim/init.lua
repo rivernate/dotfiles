@@ -1,4 +1,5 @@
 require("plugins")
+require("keymaps")
 
 vim.opt.termguicolors = true
 vim.opt.syntax = "on"
@@ -26,8 +27,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
-
-vim.g.mapleader = " "
 
 vim.cmd [[colorscheme gruvbox]]
 
