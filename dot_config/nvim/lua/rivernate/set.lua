@@ -24,7 +24,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
-vim.opt.guicursor = ""
 
 -- Give more space for displaying messages.
 vim.opt.cmdheight = 1
