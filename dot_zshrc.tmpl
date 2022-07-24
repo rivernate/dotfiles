@@ -230,6 +230,9 @@ if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc' ]; th
 ###########################
 # Setup asdf
 ###########################
+{{ if eq (index .chezmoi.osRelease "id" ) "arch" -}}
+. /opt/asdf-vm/asdf.sh
+{{- end }}
 
 {{ if eq .chezmoi.os "darwin" -}}
 . $(brew --prefix asdf)/libexec/asdf.sh
