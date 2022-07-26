@@ -2,3 +2,4 @@ java openjdk-18
 nodejs 18.6.0
 yarn 1.22.19
 python 3.10.5
+direnv 2.32.1
