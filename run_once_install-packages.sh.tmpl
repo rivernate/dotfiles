@@ -8,7 +8,7 @@ if ! [ -x "$(command -v yay)" ]; then
 fi
 cd ~/ && rm -rf ~/yay-bin
 yay
-yay -Scc --needed antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git vim zsh zsh-theme-powerlevel10k-git openssh bat nmap pandoc ripgrep tig w3m ack catimg exa ripgrep-all 
+yay -Scc --needed antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git vim zsh zsh-theme-powerlevel10k-git openssh bat nmap pandoc ripgrep tig w3m ack catimg exa ripgrep-all
 
 shell=$(pinky -l $USER|grep -oP 'Shell: \K.*')
 if [ $shell != "/bin/zsh" ]
@@ -22,9 +22,9 @@ yay -Scc --needed bspwm sxhkd rofi alacritty picom dunst polybar xcursor-vanilla
 
 {{ end -}}
 ## install nb.sh
-npm install -g nb.sh
-sudo "$(which nb)" completions install
-sudo "$(which nb)" env install
+# npm install -g nb.sh
+# sudo "$(which nb)" completions install
+# sudo "$(which nb)" env install
 
 {{ end -}}
 {{ end -}}
