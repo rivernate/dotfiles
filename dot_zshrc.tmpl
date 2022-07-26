@@ -163,7 +163,7 @@ autoload -U +X bashcompinit && bashcompinit
 ##
 # AWS Summon gopass
 ##
-aws_shell() {                         
+aws_shell() {
  summon -p gopass -f $XDG_CONFIG_HOME/aws_shell/$1.yml aws_login.sh
 }
 
@@ -205,9 +205,6 @@ export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
 alias ssh='TERM=xterm-256color ssh'
 
 fpath=(~/.zsh/completion ~/.zsh/funcs $fpath)
-
-# setup rbenv
-eval "$(rbenv init -)"
 
 {{ if eq .chezmoi.os "darwin" -}}
 
