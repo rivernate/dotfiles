@@ -1,5 +1,5 @@
 # launch a new terminal instance when in either 'default' for 'test' mode
-alt - return : /Applications/Alacritty.app/Contents/MacOS/alacritty
+alt - return : /Applications/Alacritty.app/Contents/MacOS/alacritty -e tmux
 
 # Navigation
 alt - h : yabai -m window --focus west
@@ -34,8 +34,8 @@ shift + alt - 0x1B : yabai -m space --destroy
 # Change focused workspace
 alt - 1 : yabai -m space --focus 1
 alt - 2 : yabai -m space --focus 2
-alt - 3 : yabai -m space --focus 3 
-alt - 4 : yabai -m space --focus 4 
+alt - 3 : yabai -m space --focus 3
+alt - 4 : yabai -m space --focus 4
 
 # Move focus workspace to display
 shift + alt - f1 : yabai -m space --display 1
