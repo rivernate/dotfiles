@@ -19,6 +19,10 @@ vim.cmd([[
 return require("packer").startup(function()
   local use = use
   use "wbthomason/packer.nvim"
+  use {
+    "bazelbuild/vim-bazel",
+    requires = { {"google/vim-maktaba"} }
+  }
   use "nvim-treesitter/nvim-treesitter"
   use "tpope/vim-fugitive" -- Git commands
   use "kyazdani42/nvim-web-devicons"
@@ -30,4 +34,5 @@ return require("packer").startup(function()
   use "prettier/vim-prettier"
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
   use "williamboman/nvim-lsp-installer"
+  use 'mfussenegger/nvim-jdtls'
 end)

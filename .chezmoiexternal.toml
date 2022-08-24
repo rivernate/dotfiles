@@ -1,0 +1,4 @@
+[".dracula_pro"]
+    type = "git-repo"
+    url = "git@github.com:rivernate/dracula_pro.git"
+    refreshPeriod = "168h"
