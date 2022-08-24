@@ -50,6 +50,9 @@ yabai -m rule --add app='IntelliJ IDEA' title='Project Structure' manage=off
 yabai -m rule --add app='IntelliJ IDEA' title='Preferences' manage=off
 yabai -m rule --add app='IntelliJ IDEA' title='Edit configuration' manage=off
 
+# Setup Spacebar
+yabai -m config external_bar all:38:0
+
 # Disable animations when opening and closing windows.
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 
