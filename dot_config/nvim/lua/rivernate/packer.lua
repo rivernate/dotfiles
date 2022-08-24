@@ -24,6 +24,7 @@ return require("packer").startup(function()
     requires = { {"google/vim-maktaba"} }
   }
   use "nvim-treesitter/nvim-treesitter"
+  use "nvim-treesitter/nvim-treesitter-context"
   use "tpope/vim-fugitive" -- Git commands
   use "kyazdani42/nvim-web-devicons"
   use {
