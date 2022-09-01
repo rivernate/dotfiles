@@ -17,11 +17,17 @@ vim.cmd([[
 ]])
 
 return require("packer").startup(function()
-  local use = use
   use "wbthomason/packer.nvim"
   use {
     "bazelbuild/vim-bazel",
     requires = { {"google/vim-maktaba"} }
+  }
+  use { "williamboman/mason.nvim" }
+  use { "williamboman/mason-lspconfig.nvim",
+        requires = {
+          {'neovim/nvim-lspconfig'}, -- Configurations for Nvim LSP
+          {"williamboman/mason.nvim"}
+        }
   }
   use "nvim-treesitter/nvim-treesitter"
   use "nvim-treesitter/nvim-treesitter-context"
@@ -34,6 +40,5 @@ return require("packer").startup(function()
   use "gruvbox-community/gruvbox"
   use "prettier/vim-prettier"
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
-  use "williamboman/nvim-lsp-installer"
   use 'mfussenegger/nvim-jdtls'
 end)
