@@ -1,13 +1,13 @@
 Host *
+{{ if eq .chezmoi.os "darwin" -}}
   UseKeychain yes
+{{ end -}}
   AddKeysToAgent yes
 
 Host vs-ssh.visualstudio.com ssh.dev.azure.com
-        AddKeysToAgent yes
 	HostkeyAlgorithms +ssh-rsa
 	PubkeyAcceptedAlgorithms +ssh-rsa
 
 Host github.com
-	AddKeysToAgent yes
 	User git
 	IdentityFile ~/.ssh/id_rsa
