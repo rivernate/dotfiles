@@ -18,6 +18,20 @@ vim.cmd([[
 
 return require("packer").startup(function()
   use "wbthomason/packer.nvim"
+
+  -- auto complete
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-buffer"
+  use "hrsh7th/nvim-cmp"
+  use("L3MON4D3/LuaSnip")
+  use("saadparwaiz1/cmp_luasnip")
+  use("onsails/lspkind-nvim")
+  use("simrat39/symbols-outline.nvim")
+
+  use {
+    "TimUntersberger/neogit",
+    requires = 'nvim-lua/plenary.nvim'
+  }
   use {
     "bazelbuild/vim-bazel",
     requires = { {"google/vim-maktaba"} }
@@ -31,12 +45,12 @@ return require("packer").startup(function()
   }
   use "nvim-treesitter/nvim-treesitter"
   use "nvim-treesitter/nvim-treesitter-context"
-  use "tpope/vim-fugitive" -- Git commands
   use "kyazdani42/nvim-web-devicons"
   use {
     "nvim-telescope/telescope.nvim",
     requires =  { {"nvim-lua/plenary.nvim" } }
   }
+  use "ludovicchabant/vim-gutentags"
   use "gruvbox-community/gruvbox"
   use "prettier/vim-prettier"
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
