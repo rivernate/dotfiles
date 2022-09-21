@@ -1,3 +1,4 @@
+tags
 README.md
 {{- if not .bspwm }}
 .config/bspwm
