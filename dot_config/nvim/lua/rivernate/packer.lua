@@ -36,13 +36,14 @@ return require("packer").startup(function()
     "bazelbuild/vim-bazel",
     requires = { {"google/vim-maktaba"} }
   }
-  use { "williamboman/mason.nvim" }
   use { "williamboman/mason-lspconfig.nvim",
         requires = {
           {'neovim/nvim-lspconfig'}, -- Configurations for Nvim LSP
           {"williamboman/mason.nvim"}
         }
   }
+  use { "williamboman/mason.nvim" }
+  use { "jose-elias-alvarez/null-ls.nvim" }
   use "nvim-treesitter/nvim-treesitter"
   use "nvim-treesitter/nvim-treesitter-context"
   use "kyazdani42/nvim-web-devicons"
