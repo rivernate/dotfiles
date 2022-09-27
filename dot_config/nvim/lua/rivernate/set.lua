@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 vim.opt.termguicolors = true
 vim.opt.syntax = "on"
 vim.opt.errorbells = false
@@ -34,7 +36,3 @@ vim.opt.updatetime = 50
 
 -- Don't pass messages to |ins-completion-menu|.
 vim.opt.shortmess:append("c")
-
-vim.cmd [[colorscheme gruvbox]]
-
-vim.g.mapleader = " "
