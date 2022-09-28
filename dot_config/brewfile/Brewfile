@@ -44,7 +44,6 @@ brew "zsh"
 brew "cmacrae/formulae/spacebar"
 brew "koekeishiya/formulae/skhd"
 brew "koekeishiya/formulae/yabai"
-brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 cask "google-cloud-sdk"
 cask "alacritty"
 cask "font-meslo-lg-nerd-font"
