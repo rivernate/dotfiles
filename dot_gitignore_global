@@ -6,6 +6,7 @@
 .byebug_history
 docker-compose.nate.yml
 .rbenv-gemsets
+tags
 
 # Direnv stuff
 .direnv
