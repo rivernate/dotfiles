@@ -51,7 +51,6 @@ return require("packer").startup(function()
     "nvim-telescope/telescope.nvim",
     requires =  { {"nvim-lua/plenary.nvim" } }
   }
-  use "ludovicchabant/vim-gutentags"
   use "gruvbox-community/gruvbox"
   use "prettier/vim-prettier"
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
