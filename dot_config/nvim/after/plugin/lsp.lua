@@ -159,7 +159,6 @@ require("mason-lspconfig").setup_handlers({
   end,
   ["jsonls"] = function ()
     lspconfig.jsonls.setup(config({
-      filetypes = { "avsc", "json", "jsonc" },
       settings = {
         json = {
           schemas = require('schemastore').json.schemas(),
