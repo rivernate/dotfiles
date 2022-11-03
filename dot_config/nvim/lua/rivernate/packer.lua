@@ -55,7 +55,6 @@ return require("packer").startup(function()
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
   use 'mfussenegger/nvim-jdtls'
   use "b0o/schemastore.nvim"
-  use("nathom/filetype.nvim")
 
   --THEMES--
   use "rktjmp/lush.nvim"
