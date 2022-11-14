@@ -27,6 +27,7 @@ brew "libyaml"
 brew "lua-language-server"
 brew "nb"
 brew "nmap"
+brew "neovim", args: ['HEAD']
 brew "pandoc"
 brew "podman"
 brew "readline"
