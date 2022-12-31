@@ -27,6 +27,7 @@ return require("packer").startup(function()
   use("saadparwaiz1/cmp_luasnip")
   use("onsails/lspkind-nvim")
   use("simrat39/symbols-outline.nvim")
+  use("github/copilot.vim")
 
   use {
     "TimUntersberger/neogit",
