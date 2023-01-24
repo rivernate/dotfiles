@@ -44,6 +44,9 @@ yabai -m rule --add title='Preferences$' manage=of
 # float settings windows
 yabai -m rule --add title 'Settings$' manage=off
 
+# float system settings
+yabai -m rule --add app="^System Settings$" sticky=on layer=above manage=off
+
 # Some Intellij settings, in case you are using it. float Intellij Preference panes
 yabai -m rule --add app='IntelliJ IDEA' title='^$' manage=off
 yabai -m rule --add app='IntelliJ IDEA' title='Project Structure' manage=off
