@@ -23,11 +23,11 @@ return require("packer").startup(function()
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-buffer"
   use "hrsh7th/nvim-cmp"
-  use("L3MON4D3/LuaSnip")
-  use("saadparwaiz1/cmp_luasnip")
-  use("onsails/lspkind-nvim")
-  use("simrat39/symbols-outline.nvim")
-  use("github/copilot.vim")
+  use "L3MON4D3/LuaSnip"
+  use "saadparwaiz1/cmp_luasnip"
+  use "onsails/lspkind-nvim"
+  use "simrat39/symbols-outline.nvim"
+  use "github/copilot.vim"
 
   use {
     "TimUntersberger/neogit",
@@ -43,8 +43,9 @@ return require("packer").startup(function()
           {"williamboman/mason.nvim"}
         }
   }
-  use { "williamboman/mason.nvim" }
-  use { "jose-elias-alvarez/null-ls.nvim" }
+  use "williamboman/mason.nvim"
+  use "jose-elias-alvarez/null-ls.nvim"
+  use 'nvim-tree/nvim-web-devicons'
   use "nvim-treesitter/nvim-treesitter"
   use "nvim-treesitter/nvim-treesitter-context"
   use "kyazdani42/nvim-web-devicons"
