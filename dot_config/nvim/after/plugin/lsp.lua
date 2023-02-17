@@ -15,7 +15,7 @@ require("mason").setup({
 require("mason-lspconfig").setup({
   ensure_installed = {
     "bashls", "cssls", "dockerls", "eslint", "gopls", "html", "jsonls",
-    "jdtls", "tsserver", "sumneko_lua", "marksman", "pyright", "solargraph",
+    "jdtls", "tsserver", "lua_ls", "marksman", "pyright", "solargraph",
     "rust_analyzer", "sqlls", "taplo", "terraformls", "lemminx", "yamlls"
   }
 })
@@ -128,8 +128,8 @@ require("mason-lspconfig").setup_handlers({
       },
     }))
   end,
-  ["sumneko_lua"] = function ()
-    lspconfig.sumneko_lua.setup(config({
+  ["lua_ls"] = function ()
+    lspconfig.lua_ls.setup(config({
       settings = {
         Lua = {
           runtime = {
