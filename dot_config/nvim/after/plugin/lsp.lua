@@ -19,6 +19,15 @@ require("mason-lspconfig").setup({
     "rust_analyzer", "sqlls", "taplo", "terraformls", "lemminx", "yamlls"
   }
 })
+require("mason-null-ls").setup({
+  automatic_setup = true,
+  automatic_installation = false,
+  ensure_installed = {
+    "codespell"
+  }
+})
+require("null-ls").setup({})
+require("mason-null-ls").setup_handlers()
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -39,12 +48,11 @@ cmp.setup({
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-y'] = cmp.mapping.confirm({ select = true}),
+    ['<C-y'] = cmp.mapping.confirm({ select = true }),
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
   }),
-
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = lspkind.presets.default[vim_item.kind]
@@ -53,7 +61,6 @@ cmp.setup({
       return vim_item
     end,
   },
-
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
@@ -72,21 +79,23 @@ local function config(_config)
       nnoremap("K", function() vim.lsp.buf.hover() end)
       nnoremap("<leader>f", function() vim.lsp.buf.format() end)
       nnoremap("<leader>vws", function() vim.lsp.buf.workspace_symbol() end)
-      nnoremap("<leader>vd", function()  vim.diagnostic.open_float() end)
+      nnoremap("<leader>vd", function() vim.diagnostic.open_float() end)
       nnoremap("<leader>dl", function() require('telescope.builtin').diagnostics() end)
       nnoremap("[d", function() vim.diagnostic.goto_next() end)
       nnoremap("]d", function() vim.diagnostic.goto_prev() end)
       nnoremap("<leader>vca", function() vim.lsp.buf.code_action() end)
-      nnoremap("<leader>vco", function() vim.lsp.buf.code_action({
-        filter = function(code_action)
-          if not code_action or not code_action.data then
-            return false
-          end
-          local data = code_action.data.id
-          return string.sub(data, #data - 1, #data) == ":0"
-        end,
-        apply = true
-      }) end)
+      nnoremap("<leader>vco", function()
+        vim.lsp.buf.code_action({
+          filter = function(code_action)
+            if not code_action or not code_action.data then
+              return false
+            end
+            local data = code_action.data.id
+            return string.sub(data, #data - 1, #data) == ":0"
+          end,
+          apply = true
+        })
+      end)
       nnoremap("<leader>vrr", function() vim.lsp.buf.references() end)
       nnoremap("<leader>vrn", function() vim.lsp.buf.rename() end)
       inoremap("<C-h>", function() vim.lsp.buf.signature_help() end)
@@ -107,14 +116,18 @@ require("mason-lspconfig").setup_handlers({
   -- The first entry (without a key) will be the default handler
   -- and will be called for each installed server that doesn't have
   -- a dedicated handler.
-  function (server_name) -- default handler (optional)
+  function(server_name) -- default handler (optional)
     lspconfig[server_name].setup(config())
   end,
   -- Next, you can provide targeted overrides for specific servers.
-  ["gopls"] = function ()
+  ["gopls"] = function()
     lspconfig.gopls.setup(config({
       settings = {
         gopls = {
+          analyses = {
+            unusedparams = true,
+          },
+          staticcheck = true,
           env = {
             GOPACKAGESDRIVER = './tools/gopackagesdriver.sh'
           },
@@ -128,7 +141,7 @@ require("mason-lspconfig").setup_handlers({
       },
     }))
   end,
-  ["lua_ls"] = function ()
+  ["lua_ls"] = function()
     lspconfig.lua_ls.setup(config({
       settings = {
         Lua = {
@@ -153,14 +166,14 @@ require("mason-lspconfig").setup_handlers({
       },
     }))
   end,
-  ["rust_analyzer"] = function ()
+  ["rust_analyzer"] = function()
     lspconfig.rust_analyzer.setup(config({
       settings = {
         ["rust_analyzer"] = {}
       }
     }))
   end,
-  ["jsonls"] = function ()
+  ["jsonls"] = function()
     lspconfig.jsonls.setup(config({
       settings = {
         json = {
