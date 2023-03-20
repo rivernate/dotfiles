@@ -45,6 +45,12 @@ return require("packer").startup(function()
   }
   use "williamboman/mason.nvim"
   use "jose-elias-alvarez/null-ls.nvim"
+  use { "jay-babu/mason-null-ls.nvim",
+        requires = {
+          {"williamboman/mason.nvim"},
+          {"jose-elias-alvarez/null-ls.nvim"}
+        }
+  }
   use 'nvim-tree/nvim-web-devicons'
   use "nvim-treesitter/nvim-treesitter"
   use "nvim-treesitter/nvim-treesitter-context"
