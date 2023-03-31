@@ -6,7 +6,6 @@ require("rivernate.set")
 require("rivernate.filetypes")
 require("rivernate.packer")
 require("rivernate.keymap")
-require("rivernate.neogit")
 
 autocmd({"BufWritePre"}, {
     group = RivernateGroup,
