@@ -2,13 +2,16 @@ local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({
-    "git", "clone", "--depth", "1",
-    "https://github.com/wbthomason/packer.nvim", install_path
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
   })
 
   -- Ref: https://github.com/wbthomason/packer.nvim/issues/739#issuecomment-1019280631
-  vim.o.runtimepath = vim.fn.stdpath("data") .. "/site/pack/*/start/*," ..
-      vim.o.runtimepath
+  vim.o.runtimepath = vim.fn.stdpath("data") .. "/site/pack/*/start/*," .. vim.o.runtimepath
 end
 
 vim.cmd([[packadd packer.nvim]])
@@ -22,6 +25,10 @@ vim.cmd([[
 
 return require("packer").startup(function()
   use("wbthomason/packer.nvim")
+
+  -- DAP --
+  use("mfussenegger/nvim-dap")
+  use({ "leoluz/nvim-dap-go", requires = { { "mfussenegger/nvim-dap" } } })
 
   -- auto complete
   use("hrsh7th/cmp-nvim-lsp")
@@ -37,37 +44,41 @@ return require("packer").startup(function()
   use({
     "williamboman/mason-lspconfig.nvim",
     requires = {
-      { "neovim/nvim-lspconfig" },     -- Configurations for Nvim LSP
-      { "williamboman/mason.nvim" }
-    }
+      { "neovim/nvim-lspconfig" }, -- Configurations for Nvim LSP
+      { "williamboman/mason.nvim" },
+    },
   })
   use("williamboman/mason.nvim")
   use("jose-elias-alvarez/null-ls.nvim")
   use({
     "jay-babu/mason-null-ls.nvim",
     requires = {
-      { "williamboman/mason.nvim" }, { "jose-elias-alvarez/null-ls.nvim" }
-    }
+      { "williamboman/mason.nvim" },
+      { "jose-elias-alvarez/null-ls.nvim" },
+    },
   })
   use("nvim-tree/nvim-web-devicons")
   use("nvim-treesitter/nvim-treesitter")
   use("nvim-treesitter/nvim-treesitter-context")
   use({
     "nvim-telescope/telescope.nvim",
-    requires = { { "nvim-lua/plenary.nvim" } }
+    requires = { { "nvim-lua/plenary.nvim" } },
   })
   use("prettier/vim-prettier")
-  use("neovim/nvim-lspconfig")   -- Configurations for Nvim LSP
+  use("neovim/nvim-lspconfig") -- Configurations for Nvim LSP
   use("mfussenegger/nvim-jdtls")
   use("b0o/schemastore.nvim")
 
   use({
     "pwntester/octo.nvim",
     requires = {
-      "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim",
-      "kyazdani42/nvim-web-devicons"
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "kyazdani42/nvim-web-devicons",
     },
-    config = function() require("octo").setup() end
+    config = function()
+      require("octo").setup()
+    end,
   })
 
   -- THEMES--
