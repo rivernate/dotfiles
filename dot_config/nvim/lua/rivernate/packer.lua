@@ -33,7 +33,6 @@ return require("packer").startup(function()
   use("simrat39/symbols-outline.nvim")
   use("github/copilot.vim")
 
-  use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
   use({ "bazelbuild/vim-bazel", requires = { { "google/vim-maktaba" } } })
   use({
     "williamboman/mason-lspconfig.nvim",
