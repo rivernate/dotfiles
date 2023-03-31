@@ -3,7 +3,8 @@
     "Lua.diagnostics.globals": [
         "vim",
         "require",
-        "use"
+        "use",
+        "packer_bootstrap"
     ],
     "workspace.library": [
         "/Users/nathan/.config/nvim",
