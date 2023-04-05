@@ -216,10 +216,10 @@ fpath=(~/.zsh/completion ~/.zsh/funcs $fpath)
 export JAVA_HOME=`/usr/libexec/java_home`
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nathanmills/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc" ]; then source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nathanmills/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc" ]; then source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"; fi
 
 ###########################
 # End OSX specific setup
