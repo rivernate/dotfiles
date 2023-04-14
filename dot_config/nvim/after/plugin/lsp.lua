@@ -1,3 +1,5 @@
+-- luacheck: globals vim
+
 local Remap = require("rivernate.keymap")
 local nnoremap = Remap.nnoremap
 local inoremap = Remap.inoremap
@@ -27,7 +29,6 @@ require("mason-null-ls").setup({
   }
 })
 require("null-ls").setup({})
-require("mason-null-ls").setup_handlers()
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -68,7 +69,7 @@ cmp.setup({
   },
 })
 
-local function config(_config)
+local function config(config_)
   return vim.tbl_deep_extend("force", {
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     on_attach = function()
@@ -103,7 +104,7 @@ local function config(_config)
     lsp_flags = {
       debounce_text_changes = 150
     }
-  }, _config or {})
+  }, config_ or {})
 end
 
 
@@ -152,7 +153,10 @@ require("mason-lspconfig").setup_handlers({
           },
           diagnostics = {
             -- Get the language server to recognize the `vim` global
-            globals = { "vim" }
+            globals = {
+              "vim",
+              "use",
+            }
           },
           workspace = {
             -- Make the server aware of Neovim runtime files
