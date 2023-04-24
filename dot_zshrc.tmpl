@@ -227,6 +227,9 @@ export LDFLAGS="-L/opt/homebrew/opt/libxml2/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/libxml2/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/libxml2/lib/pkgconfig"
 
+# Setup Github Copilot CLI
+eval "$(github-copilot-cli alias -- "$0")"
+
 ###########################
 # End OSX specific setup
 ###########################
