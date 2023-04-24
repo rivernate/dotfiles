@@ -1,4 +1,4 @@
-nodejs 19.0.0
+nodejs lts
 yarn 1.22.19
 python 3.11.1
 direnv 2.32.1
