@@ -227,9 +227,6 @@ export LDFLAGS="-L/opt/homebrew/opt/libxml2/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/libxml2/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/libxml2/lib/pkgconfig"
 
-# Setup Github Copilot CLI
-eval "$(github-copilot-cli alias -- "$0")"
-
 ###########################
 # End OSX specific setup
 ###########################
@@ -251,6 +248,14 @@ eval "$(github-copilot-cli alias -- "$0")"
 ###########################
 # End asdf setup
 ###########################
+
+###########################
+# Setup github copilot cli
+###########################
+if ! command -v github-copilot-cli &> /dev/null
+then
+  eval "$(github-copilot-cli alias -- "$0")"
+fi
 
 {{ if eq (index .chezmoi.osRelease "id" ) "arch" -}}
 # setup yay helpers
