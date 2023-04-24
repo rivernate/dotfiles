@@ -39,10 +39,10 @@ yabai -m config window_gap                   06
 # float system preferences
 yabai -m rule --add app='^System Information$' manage=off
 yabai -m rule --add app='^System Preferences$' manage=off
-yabai -m rule --add title='Preferences$' manage=of
+yabai -m rule --add title='Preferences$' manage=off
 
 # float settings windows
-yabai -m rule --add title 'Settings$' manage=off
+yabai -m rule --add title='Settings$' manage=off
 
 # float system settings
 yabai -m rule --add app="^System Settings$" sticky=on layer=above manage=off
