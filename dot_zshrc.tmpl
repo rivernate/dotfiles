@@ -252,7 +252,7 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/libxml2/lib/pkgconfig"
 ###########################
 # Setup github copilot cli
 ###########################
-if ! command -v github-copilot-cli &> /dev/null
+if command -v github-copilot-cli &> /dev/null
 then
   eval "$(github-copilot-cli alias -- "$0")"
 fi
