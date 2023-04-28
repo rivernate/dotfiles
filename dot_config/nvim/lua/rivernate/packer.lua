@@ -83,6 +83,8 @@ return require("packer").startup(function()
     end,
   })
 
+  use { "sitiom/nvim-numbertoggle" }
+
   -- THEMES--
   use("rktjmp/lush.nvim")
 
