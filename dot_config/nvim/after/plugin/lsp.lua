@@ -188,7 +188,7 @@ require("mason-lspconfig").setup_handlers({
     }))
   end,
   ["yamlls"] = function()
-    lspconfig.yamplls.setup(config({
+    lspconfig.yamlls.setup(config({
       settings = {
         yaml = {
           keyOrdering = false,
