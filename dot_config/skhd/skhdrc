@@ -1,5 +1,5 @@
 # launch a new terminal instance when in either 'default' for 'test' mode
-alt - return : /Applications/Alacritty.app/Contents/MacOS/alacritty -e tmux
+alt - return : /Applications/Alacritty.app/Contents/MacOS/alacritty
 
 # Navigation
 alt - h : yabai -m window --focus west

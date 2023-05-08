@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	alacritty -e zsh
+	alacritty
 
 # program launcher
 super + @space
@@ -14,7 +14,7 @@ super + @space
 super + Escape
 	pkill -USR1 -x sxhkd
 
-super + Home 
+super + Home
 	i3lock -i ~/.config/i3lock/tile.png -t
 
 
