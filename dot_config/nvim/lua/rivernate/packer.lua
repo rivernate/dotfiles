@@ -85,6 +85,8 @@ return require("packer").startup(function()
 
   use { "sitiom/nvim-numbertoggle" }
 
+  use("NvChad/nvim-colorizer.lua")
+
   -- THEMES--
   use("rktjmp/lush.nvim")
 
