@@ -1,8 +1,10 @@
 {{- $email := promptString "email" -}}
 {{- $name := promptString "name" -}}
 {{- $bspwm := promptBool "Are you wanting BSPWM" -}}
+{{- $work := promptBool "Is this for work?" -}}
 
 [data]
     email = {{ $email | quote }}
     name = {{ $name | quote }}
     bspwm = {{ $bspwm }}
+    work = {{ $work }}
