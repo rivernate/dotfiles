@@ -230,6 +230,9 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/libxml2/lib/pkgconfig"
 # setup FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Use curl provided by brew
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+
 ###########################
 # End OSX specific setup
 ###########################
