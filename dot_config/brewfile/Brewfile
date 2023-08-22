@@ -33,6 +33,7 @@ brew "lua-language-server"
 brew "nb"
 brew "nmap"
 brew "neovim", args: ['HEAD']
+brew "opam"
 brew "pandoc"
 brew "podman"
 brew "readline"
