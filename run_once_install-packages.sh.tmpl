@@ -7,8 +7,7 @@ if ! [ -x "$(command -v yay)" ]; then
   git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si
 fi
 cd ~/ && rm -rf ~/yay-bin
-yay
-yay -Scc --needed antigen-git bitwarden-cli direnv nvm-git rbenv-git ripgrep ruby-build-git vim zsh zsh-theme-powerlevel10k-git openssh bat nmap pandoc ripgrep tig w3m ack catimg exa ripgrep-all
+yay -Scc --needed antigen-git bitwarden-cli direnv ruby-build-git neovim-git zsh zsh-theme-powerlevel10k-git openssh bat nmap ripgrep  ack catimg exa ripgrep-all
 
 shell=$(pinky -l $USER|grep -oP 'Shell: \K.*')
 if [ $shell != "/bin/zsh" ]
