@@ -1,10 +1,12 @@
 {{- $email := promptString "email" -}}
 {{- $name := promptString "name" -}}
 {{- $bspwm := promptBool "Are you wanting BSPWM" -}}
+{{- $hyprland :=promptBool "Are you wanting Hyprland" -}}
 {{- $work := promptBool "Is this for work?" -}}
 
 [data]
+    bspwm = {{ $bspwm }}
+    hyprland = {{ $hyprland }}
     email = {{ $email | quote }}
     name = {{ $name | quote }}
-    bspwm = {{ $bspwm }}
     work = {{ $work }}
