@@ -153,13 +153,7 @@ alias vi="nvim"
 # End of Aliases
 ##
 
-##
-# direnv (direnv.net)
-##
-eval "$(direnv hook zsh)"
-
 autoload -U +X bashcompinit && bashcompinit
-
 
 ##
 # AWS Summon gopass
@@ -264,6 +258,11 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 ###########################
 # End asdf setup
 ###########################
+
+###########################
+# direnv (direnv.net)
+###########################
+eval "$(direnv hook zsh)"
 
 ###########################
 # Setup github copilot cli
