@@ -8,6 +8,9 @@ README.md
 {{ if ne (index .chezmoi.osRelease "id") "arch" -}}
 .config/yay/pkglist.txt
 .zsh/funcs/yay*
+.config/wlogout
+.config/dunst
+.config/rofi
 {{- end }}
 {{- if ne .chezmoi.os "darwin" }}
 .config/brewfile/Brewfile
@@ -17,7 +20,4 @@ README.md
 {{- if not .hyprland }}
 .config/hypr
 .config/waybar
-.config/dunst
-.config/Thunar
-.config/wlogout
 {{- end }}
