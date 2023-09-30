@@ -14,3 +14,10 @@ README.md
 .config/skhd
 .config/yabai
 {{- end  }}
+{{- if not .hyprland }}
+.config/hypr
+.config/waybar
+.config/dunst
+.config/Thunar
+.config/wlogout
+{{- end }}
