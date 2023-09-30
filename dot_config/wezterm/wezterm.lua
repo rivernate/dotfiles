@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 local config = {}
 
-config.color_scheme = 'Batman'
+config.color_scheme = 'Gruvbox Dark (Gogh)'
 config.font = wezterm.font_with_fallback({
   'FiraMono Nerd Font',
 })
