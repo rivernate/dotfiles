@@ -8,6 +8,8 @@ README.md
 {{ if ne (index .chezmoi.osRelease "id") "arch" -}}
 .config/yay/pkglist.txt
 .zsh/funcs/yay*
+{{- end }}
+{{ if (and (not .hyprland) (not .bspwm)) -}}
 .config/wlogout
 .config/dunst
 .config/rofi
