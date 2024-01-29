@@ -25,14 +25,6 @@ vim.cmd([[
   augroup end
 ]])
 
-{{ if .work -}}
--- Config for codeium
-vim.g.codeium_server_config = {
-    portal_url = 'https://codeium.derivita.team',
-    api_url = 'https://codeium.derivita.team/_route/api_server'
-  }
-{{ end }}
-
 return require("packer").startup(function()
   use("wbthomason/packer.nvim")
 
