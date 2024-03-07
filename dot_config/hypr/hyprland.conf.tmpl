@@ -14,6 +14,7 @@ exec-once = /usr/libexec/polkit-gnome-authentication-agent-1
 exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 {{- end }}
 exec-once = wlsunset -S 9:00 -s 19:30
+exec-once = swayidle -w
 exec = swaybg -m fill -i "${find ~/.wallpapers/dark -type f | shuf -n1}"
 exec-once = waybar --log-level=INFO &> ~/.log/waybar.log
 
@@ -149,6 +150,7 @@ windowrule = float, title:^(Volume Control)$
 windowrule = float, title:^(Picture-in-Picture)$
 windowrule = size 800 600, title:^(Volume Control)$
 windowrule = move 75 44%, title:^(Volume Control)$
+windowrule = tile, title:^(Google Chat)(.*)$
 
 # █▄▀ █▀▀ █▄█ █▄▄ █ █▄░█ █▀▄
 # █░█ ██▄ ░█░ █▄█ █ █░▀█ █▄▀
