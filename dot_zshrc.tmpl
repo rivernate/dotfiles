@@ -90,6 +90,7 @@ antigen use oh-my-zsh
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle git
 antigen bundle command-not-found
+antigen bundle ssh-agent
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -99,6 +100,12 @@ antigen bundle zsh-users/zsh-history-substring-search
 
 # Auto Suggestions
 antigen bundle zsh-users/zsh-autosuggestions
+
+# Auto update antigen
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+
+# You Should Use
+antigen bundle MichaelAquilina/zsh-you-should-use
 
 # Dotenv
 antigen bundle dotenv
@@ -127,19 +134,19 @@ mkdir -p ~/.log
 ##
 # GPG Agent
 ##
-if [[ -f ~/.local/bin/gpg-wsl.sh ]]; then
-         source ~/.local/bin/gpg-wsl.sh &>> ~/.log/gpg-wsl.log &
- elif [[ -f  ~/.local/bin/gpg-agent-relay.sh ]]; then
-	 ~/.local/bin/gpg-agent-relay.sh &>> ~/.logs/gpg-agent-relay.log &
- else
-         export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
-	 export GPG_TTY="$(tty)"
-	 if ! pgrep -x -u "$USER" gpg-agent > /dev/null
-	 then
-	 	 command gpgconf --launch gpg-agent > /dev/null
-	 fi
-	 gpg-connect-agent updatestartuptty /bye > /dev/null
-fi
+#if [[ -f ~/.local/bin/gpg-wsl.sh ]]; then
+#         source ~/.local/bin/gpg-wsl.sh &>> ~/.log/gpg-wsl.log &
+# elif [[ -f  ~/.local/bin/gpg-agent-relay.sh ]]; then
+#	 ~/.local/bin/gpg-agent-relay.sh &>> ~/.logs/gpg-agent-relay.log &
+# else
+#         export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+#	 export GPG_TTY="$(tty)"
+#	 if ! pgrep -x -u "$USER" gpg-agent > /dev/null
+#	 then
+#	 	 command gpgconf --launch gpg-agent > /dev/null
+#	 fi
+#	 gpg-connect-agent updatestartuptty /bye > /dev/null
+#fi
 ##
 # End GPG Agent
 ##
