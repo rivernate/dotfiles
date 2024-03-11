@@ -37,3 +37,6 @@ vim.opt.updatetime = 50
 
 -- Don't pass messages to |ins-completion-menu|.
 vim.opt.shortmess:append("c")
+
+-- Set Conceal level for markdown in obsidian notes
+vim.opt.conceallevel = 1
