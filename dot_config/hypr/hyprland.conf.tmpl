@@ -15,7 +15,7 @@ exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 {{- end }}
 exec-once = wlsunset -S 9:00 -s 19:30
 exec-once = swayidle -w
-exec = swaybg -m fill -i "${find ~/.wallpapers/dark -type f | shuf -n1}"
+exec = swaybg -m fill -i "$(find ~/.wallpapers -type f | shuf -n1)"
 exec-once = waybar --log-level=INFO &> ~/.log/waybar.log
 
 # █▀▄▀█ █▀█ █▄░█ █ ▀█▀ █▀█ █▀█
@@ -186,7 +186,7 @@ bind = ALT, Print, exec, grimblast --notify --cursor copysave screen
 # █░▀░█ █ ▄█ █▄▄
 bind = SUPER SHIFT, X, exec, hyprpicker -a -n
 bind = CTRL ALT, L, exec, swaylock
-bind = SUPER, Return, exec, wezterm -e tmux
+bind = SUPER, Return, exec, kitty -e tmux
 bind = SUPER, E, exec, thunar
 bind = SUPER, Space, exec, killall rofi || rofi -show drun -theme ~/.config/rofi/global/rofi.rasi
 bind = SUPER, period, exec, killall rofi || rofi -show emoji -emoji-format "{emoji}" -modi emoji -theme ~/.config/rofi/global/emoji
