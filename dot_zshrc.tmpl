@@ -22,6 +22,10 @@ compinit
 # menu driven auto complete
 zstyle ':completion:*' menu select
 
+# completion cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
 # autocomplete aliases
 setopt COMPLETE_ALIASES
 
