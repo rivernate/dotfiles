@@ -23,8 +23,8 @@ exec-once = waybar --log-level=INFO &> ~/.log/waybar.log
 monitor=eDP-1, 2256x1504, 0x0, 1
 monitor=,preferred,auto,1
 
-# █░█░█ █▀█ █▀█ █▄▀ █▀█ █▀  ▄▀█ █▀▀ █▀▀
-# ▀▄▀▄▀ █▄█ █▀▄ █░█ █▀▀ ▄█  █▀█ █▄▄ ██▄
+# █░█░█ █▀█ █▀█ █▄▀ █▀█ █▀ ▄▀█ █▀▀ █▀▀
+# ▀▄▀▄▀ █▄█ █▀▄ █░█ █▀▀ ▄█ █▀█ █▄▄ ██▄
 workspace = 1, monitor:DP-10, monitor:DP-3
 workspace = 2, monitor:DP-10, monitor:DP-3
 workspace = 3, monitor:eDP-1
@@ -202,7 +202,7 @@ bind = SUPER SHIFT, X, exec, hyprpicker -a -n
 bind = CTRL ALT, L, exec, swaylock
 bind = SUPER, Return, exec, kitty -e tmux
 bind = SUPER, E, exec, thunar
-bind = SUPER, Space, exec, killall rofi || rofi -show drun -theme ~/.config/rofi/global/rofi.rasi
+bind = SUPER, Space, exec, killall rofi || rofi -show drun #-theme ~/.config/rofi/global/rofi.rasi
 bind = SUPER, period, exec, killall rofi || rofi -show emoji -emoji-format "{emoji}" -modi emoji -theme ~/.config/rofi/global/emoji
 bind = SUPER, escape, exec, wlogout --protocol layer-shell -b 5 -T 400 -B 400
 
