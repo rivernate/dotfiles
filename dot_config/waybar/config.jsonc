@@ -67,7 +67,7 @@
     "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
   },
   "custom/updates": {
-    "format": " {}",
+    "format": "󰇚 {}",
     "interval": 7200, // every two hours
     "exec": "i=$(checkupdates); echo \"$i\" |wc -l; echo \"$i\" |column -t |tr '\n' '\r'", // # of updates and tooltip details
     "exec-if": "exit 0", // always run; consider advanced run conditions
