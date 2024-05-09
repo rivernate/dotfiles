@@ -14,21 +14,13 @@ require("mason").setup({
     }
   }
 })
-require("mason-lspconfig").setup({
-  ensure_installed = {
-    "bashls", "cssls", "dockerls", "eslint", "gopls", "html", "jsonls",
-    "jdtls", "tsserver", "lua_ls", "marksman", "pyright", "solargraph",
-    "rust_analyzer", "sqlls", "taplo", "terraformls", "lemminx", "yamlls"
-  }
-})
+require("mason-lspconfig").setup({})
 require("mason-null-ls").setup({
-  automatic_setup = true,
-  automatic_installation = false,
-  ensure_installed = {
-    "codespell"
-  }
+  handlers = {}
 })
-require("null-ls").setup({})
+require("null-ls").setup({
+  debug = true
+})
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
