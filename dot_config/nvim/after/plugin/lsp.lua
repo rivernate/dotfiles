@@ -18,9 +18,7 @@ require("mason-lspconfig").setup({})
 require("mason-null-ls").setup({
   handlers = {}
 })
-require("null-ls").setup({
-  debug = true
-})
+require("null-ls").setup({})
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
