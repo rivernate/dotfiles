@@ -36,12 +36,12 @@ return require("packer").startup(function()
   use("hrsh7th/cmp-nvim-lsp")
   use("hrsh7th/cmp-buffer")
   use("hrsh7th/nvim-cmp")
-  use("L3MON4D3/LuaSnip")
+  use({"L3MON4D3/LuaSnip", run = "make install_jsregexp"})
   use("saadparwaiz1/cmp_luasnip")
   use("onsails/lspkind-nvim")
   use("simrat39/symbols-outline.nvim")
   {{ if .work -}}
-  use({'Exafunction/codeium.vim', tag = '1.2.36'})
+  use('Exafunction/codeium.vim')
   {{ else -}}
   use("github/copilot.vim")
   {{ end -}}
@@ -55,12 +55,12 @@ return require("packer").startup(function()
     },
   })
   use("williamboman/mason.nvim")
-  use("jose-elias-alvarez/null-ls.nvim")
+  use("nvimtools/none-ls.nvim")
   use({
     "jay-babu/mason-null-ls.nvim",
     requires = {
       { "williamboman/mason.nvim" },
-      { "jose-elias-alvarez/null-ls.nvim" },
+      { "nvimtools/none-ls.nvim" },
     },
   })
   use("nvim-tree/nvim-web-devicons")
