@@ -1,0 +1,111 @@
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+
+require("lazy").setup({
+  -- Themes --
+  "typicode/bg.nvim",
+  "rktjmp/lush.nvim",
+  "gruvbox-community/gruvbox",
+  "Scysta/pink-panic.nvim",
+  "folke/tokyonight.nvim",
+  "haishanh/night-owl.vim",
+
+  -- DAP --
+  "mfussenegger/nvim-dap",
+  {
+    "leoluz/nvim-dap-go",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    }
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio"
+    }
+  },
+
+  -- Auto Complete / LSP--
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/nvim-cmp",
+  {
+    "L3MON4D3/LuaSnip",
+    version = "v2.*",
+    build = "make install_jsregexp"
+  },
+  "saadparwaiz1/cmp_luasnip",
+  "onsails/lspkind-nvim",
+  {{ if .work -}}
+  'Exafunction/codeium.vim',
+  {{ else -}}
+  "github/copilot.vim",
+  {{ end -}}
+  {
+    "bazelbuild/vim-bazel",
+    dependencies = {
+      "google/vim-maktaba"
+    }
+  },
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "neovim/nvim-lspconfig",
+  "nvimtools/none-ls.nvim",
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
+  },
+  "neovim/nvim-lspconfig",
+  "mfussenegger/nvim-jdtls",
+  "b0o/schemastore.nvim",
+  "folke/neodev.nvim",
+
+  -- Treesitter --
+  {
+    "nvim-treesitter/nvim-treesitter",
+     build = ":TSUpdate"
+  },
+  "nvim-treesitter/nvim-treesitter-context",
+
+  -- Telescope --
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    }
+  },
+
+  -- Github --
+  {
+    "pwntester/octo.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "kyazdani42/nvim-web-devicons",
+    },
+    config = function()
+      require("octo").setup()
+    end,
+  },
+
+  -- Misc --
+  "sitiom/nvim-numbertoggle",
+  "NvChad/nvim-colorizer.lua",
+  "nvim-tree/nvim-web-devicons",
+})

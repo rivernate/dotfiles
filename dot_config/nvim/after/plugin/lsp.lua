@@ -14,8 +14,11 @@ require("mason").setup({
     }
   }
 })
-require("mason-lspconfig").setup({})
+require("mason-lspconfig").setup({
+  automatic_installation = false,
+})
 require("mason-null-ls").setup({
+  automatic_installation = false,
   handlers = {}
 })
 require("null-ls").setup({})
@@ -212,12 +215,6 @@ require("mason-lspconfig").setup_handlers({
     }))
   end,
 })
-
-local opts = {
-  highlight_hovered_item = true,
-  show_guides = true,
-}
-require("symbols-outline").setup(opts)
 
 local snippets_paths = function()
   local plugins = { "friendly-snippets" }
