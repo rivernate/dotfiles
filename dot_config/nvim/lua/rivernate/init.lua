@@ -4,7 +4,7 @@ RivernateGroup = augroup('Rivernate', {})
 
 require("rivernate.set")
 require("rivernate.filetypes")
-require("rivernate.packer")
+require("rivernate.lazy")
 require("rivernate.keymap")
 
 autocmd({"BufWritePre"}, {

@@ -2,7 +2,7 @@ local Remap = require("rivernate.keymap")
 local nnoremap = Remap.nnoremap
 
 nnoremap("<C-p>", ":Telescope")
-nnoremap("<leader>ps", ":lua require('telescope.builtin').grep_string({ search = vim.fn.input(\"Grep For > \")})<CR>")
+nnoremap("<leader>ps", ":lua require('telescope.builtin').live_grep()<CR>")
 nnoremap("<C-p>", ":lua require('telescope.builtin').git_files()<CR>")
 nnoremap("<Leader>pf", ":lua require('telescope.builtin').find_files()<CR>")
 
