@@ -19,7 +19,9 @@ $nim\
 $rust\
 [](fg:#86BBD8 bg:#06969A)\
 $docker_context\
-[](fg:#06969A bg:#33658A)\
+[](fg:#06969A bg:#4285F4)\
+$gcloud\
+[](fg:#4285F4 bg:#33658A)\
 $time\
 [ ](fg:#33658A)\
 """
@@ -72,6 +74,11 @@ format = '[ $symbol ($version) ]($style)'
 symbol = " "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
+
+[gcloud]
+symbol = " "
+style = "bg:#4285F4"
+format = '[$symbol$account(@$domain)(\($project\))]($style)'
 
 [git_branch]
 symbol = ""
