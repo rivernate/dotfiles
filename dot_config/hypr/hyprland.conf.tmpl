@@ -65,7 +65,7 @@ misc {
   disable_splash_rendering = true
   mouse_move_enables_dpms = true
   enable_swallow = true
-  swallow_regex = ^(kitty)$
+  swallow_regex = ^(kitty|wezterm)$
 }
 
 # █▀▄ █▀▀ █▀▀ █▀█ █▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
@@ -201,7 +201,7 @@ bind = ALT, Print, exec, grimblast --notify --cursor copysave screen
 # █░▀░█ █ ▄█ █▄▄
 bind = SUPER SHIFT, X, exec, hyprpicker -a -n
 bind = CTRL ALT, L, exec, swaylock
-bind = SUPER, Return, exec, kitty -e tmux
+bind = SUPER, Return, exec, wezterm -e tmux
 bind = SUPER, E, exec, thunar
 bind = SUPER, Space, exec, killall rofi || rofi -show drun #-theme ~/.config/rofi/global/rofi.rasi
 bind = SUPER, period, exec, killall rofi || rofi -show emoji -emoji-format "{emoji}" -modi emoji -theme ~/.config/rofi/global/emoji
