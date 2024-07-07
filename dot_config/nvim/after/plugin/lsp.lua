@@ -105,6 +105,14 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
+local gopls_env = {}
+local gopackagesdriver_path = './tools/gopackagesdriver.sh'
+
+-- Check if the GOPACKAGESDRIVER file exists
+if os.execute('[ -f ' .. gopackagesdriver_path .. ' ]') then
+  gopls_env.GOPACKAGESDRIVER = gopackagesdriver_path
+end
+
 local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup_handlers({
   -- The first entry (without a key) will be the default handler
@@ -122,9 +130,7 @@ require("mason-lspconfig").setup_handlers({
             unusedparams = true,
           },
           staticcheck = true,
-          env = {
-            GOPACKAGESDRIVER = './tools/gopackagesdriver.sh'
-          },
+          env = gopls_env,
           directoryFilters = {
             "-bazel-bin",
             "-bazel-out",

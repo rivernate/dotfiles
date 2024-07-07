@@ -1,3 +1,3 @@
 #!/bin/bash
-bspc monitor eDP1 -d slack personal
-bspc monitor DP2 -d chrome terminal code
+bspc monitor eDP -d chat camera
+bspc monitor DisplayPort-9 -d terminal chrome
