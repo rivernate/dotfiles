@@ -1,10 +1,10 @@
-nodejs 18.19.0
+nodejs 18.20.3
 yarn 1.22.19
 python 3.11.3
 direnv 2.32.1
 perl 5.37.5
 ruby 3.1.2
-php 8.1.12
+php 8.3.8
 julia 1.8.3
 golang 1.22.1
 pnpm 8.7.6
