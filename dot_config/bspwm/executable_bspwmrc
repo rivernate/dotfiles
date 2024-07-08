@@ -25,6 +25,8 @@ xset s off -dpms #Disable screen power off
 picom &
 feh --bg-max --randomize ~/.wallpaper/*
 dunst &
+autolock -time 50 -locker 'i3lock --nofork' &
+xss-lock --transfer-sleep-lock -- i3lock --nofork &
 export SXHKD_SHELL="sh"
 
 exec sxhkd -r ~/.log/sxhkd.log &
