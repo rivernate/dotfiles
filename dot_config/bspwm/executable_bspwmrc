@@ -28,4 +28,4 @@ dunst &
 export SXHKD_SHELL="sh"
 
 exec sxhkd -r ~/.log/sxhkd.log &
-~/.config/polybar/launch.sh
+~/.config/bspwm/dock.sh
