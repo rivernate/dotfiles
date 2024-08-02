@@ -314,3 +314,50 @@ autoload -Uz yay-needed yay-sync
 
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/config.toml"
 eval "$(starship init zsh)"
+
+{{ if .work -}}
+function dwta() {
+    if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+        echo "Usage: dwta <branch_suffix|prefix/branch> [base_branch]"
+        return 1
+    fi
+
+    BASE_DIR="/home/nathan/Development/Derivita.git"
+    BRANCH=$1
+    BASE_BRANCH="${2:-origin/master}"
+
+    # If the branch does not include a prefix, prepend 'nathan/'
+    if [[ "$BRANCH" != */* ]]; then
+        BRANCH="nathan/$BRANCH"
+    fi
+
+    # Construct the worktree path with the prefix as a directory
+    WORKTREE_PATH="${BASE_DIR}/$(echo "$BRANCH" | tr '/' '/')"
+
+    # Fetch the latest state from origin
+    git -C "${BASE_DIR}/master" fetch origin
+
+    # Check if the branch exists on origin
+    if git -C "${BASE_DIR}/master" show-ref --verify --quiet "refs/remotes/origin/$BRANCH"; then
+        echo "Branch '$BRANCH' exists on origin. Adding worktree."
+
+        # Check if the local branch already exists
+        if git -C "${BASE_DIR}/master" show-ref --verify --quiet "refs/heads/$BRANCH"; then
+            echo "Local branch '$BRANCH' already exists. Using existing branch."
+        else
+            # Create a local branch that tracks the remote branch
+            git -C "${BASE_DIR}/master" branch --track "$BRANCH" "origin/$BRANCH"
+        fi
+        git -C "${BASE_DIR}/master" worktree add "$WORKTREE_PATH" "$BRANCH"
+    else
+        # If the branch doesn't exist and is prefixed with 'nathan/', create it
+        if [[ "$BRANCH" == nathan/* ]]; then
+            echo "Branch '$BRANCH' does not exist on origin. Creating from '$BASE_BRANCH' and adding worktree."
+            git -C "${BASE_DIR}/master" worktree add "$WORKTREE_PATH" -b "$BRANCH" "$BASE_BRANCH"
+        else
+            echo "Error: Branch '$BRANCH' does not exist on origin."
+            return 1
+        fi
+    fi
+}
+{{ end -}}
