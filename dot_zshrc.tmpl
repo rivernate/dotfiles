@@ -326,6 +326,12 @@ function dwta() {
     BRANCH=$1
     BASE_BRANCH="${2:-origin/master}"
 
+    # Ensure the base directory exists
+    if [ ! -d "$BASE_DIR" ]; then
+        echo "Error: Base directory '$BASE_DIR' does not exist."
+        return 1
+    fi
+
     # If the branch does not include a prefix, prepend 'nathan/'
     if [[ "$BRANCH" != */* ]]; then
         BRANCH="nathan/$BRANCH"
@@ -333,6 +339,12 @@ function dwta() {
 
     # Construct the worktree path with the prefix as a directory
     WORKTREE_PATH="${BASE_DIR}/$(echo "$BRANCH" | tr '/' '/')"
+
+    # Ensure the worktree path is unique and does not already exist
+    if [ -d "$WORKTREE_PATH" ]; then
+        echo "Error: Worktree path '$WORKTREE_PATH' already exists."
+        return 1
+    fi
 
     # Fetch the latest state from origin
     git -C "${BASE_DIR}/master" fetch origin
