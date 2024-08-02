@@ -371,5 +371,19 @@ function dwta() {
             return 1
         fi
     fi
+
+    # Define the session and worktree path
+    SESSION_NAME="Derivita $BRANCH"
+    WORKTREE_NAME=$(basename "$WORKTREE_PATH")
+
+    # Check if we are in a tmux session
+    if [ -n "$TMUX" ]; then
+        tmux new-session -d -s "$SESSION_NAME" -c "$WORKTREE_PATH"
+        tmux switch-client -t "$SESSION_NAME"
+    else
+        # Create a new tmux session named after the workspace in the worktree directory
+        tmux new-session -d -s "$SESSION_NAME" -c "$WORKTREE_PATH"
+        tmux attach-session -t "$SESSION_NAME"
+    fi
 }
 {{ end -}}
