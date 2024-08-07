@@ -15,6 +15,11 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 # Setup history
 HISTFILE=~/.zsh_history
 
+
+if [ -f "${HOME}/.asdf/plugins/java/set-java-home.zsh" ]; then
+. ~/.asdf/plugins/java/set-java-home.zsh
+fi
+
 # enable auto complete
 autoload -Uz compinit
 compinit
