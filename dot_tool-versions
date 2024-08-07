@@ -10,3 +10,4 @@ golang 1.22.1
 pnpm 8.7.6
 deno 1.38.5
 java openjdk-18
+lua 5.4.7
