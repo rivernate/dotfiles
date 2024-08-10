@@ -49,11 +49,14 @@ inherit = base
 
 modules-left = bspwm
 modules-center = xwindow
-modules-right = filesystem memory cpu temperature battery date powermenu pulseaudio
+modules-right = filesystem memory cpu temperature battery date powermenu pulseaudio tray
 
-tray-position = right
-tray-padding = 2
-tray-maxsize = 32
+[module/tray]
+type = internal/tray
+icon-size = 16
+padding = 2
+background = ${colors.background}
+foreground = ${colors.foreground}
 
 [bar/desktop]
 monitor = ${env:PRIMARY_MONITOR:DP-4}
@@ -283,7 +286,12 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/battery]
 type = internal/battery
-battery = BAT1
+{{ $batteryPaths := glob "/sys/class/power_supply/BAT*" }}
+{{ if $batteryPaths }}
+battery = {{ (index $batteryPaths 0) | replace "/sys/class/power_supply/" "" }}
+{{ else }}
+battery = BAT0 # Default value if no battery path is found
+{{ end }}
 adapter = AC
 full-at = 98
 

@@ -9,8 +9,9 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch polybar
-if [[ $PRIMARY_MONITOR == "eDP" || $PRIMARY_MONITOR == "eDP1" ]]; then
-  echo "Laptop primary"
+if [ $PRIMARY_MONITOR == "eDP1" ] || [ $PRIMARY_MONITOR == "eDP" ] || [ $PRIMARY_MONITOR == "eDP-1" ];
+then
+  echo Laptop primary
 else
   echo "Laptop not primary"
   polybar laptop &
