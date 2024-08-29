@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 export FC_DEBUG=0
 export PRIMARY_MONITOR=$(xrandr -q | grep primary | awk '{print $1;}')
+export SECONDARY_MONITOR=$(xrandr -q | grep " connected" | grep -v "$PRIMARY_MONITOR" | awk '{print $1;}')
+
 
 echo "Primary monitor: $PRIMARY_MONITOR"
 
@@ -14,17 +16,14 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 if [ "$1" == "docked" ]; then
   echo "Launching Polybar for docked mode"
   polybar main &
-  polybar laptop &  # Adjust this line if you want another bar for docked mode
+  polybar secondary &  # Adjust this line if you want another bar for docked mode
 elif [ "$1" == "laptop" ]; then
   echo "Launching Polybar for laptop mode"
-  polybar laptop &
+  polybar main &
 else
   # Fallback based on primary monitor detection
   if [ $PRIMARY_MONITOR == "eDP1" ] || [ $PRIMARY_MONITOR == "eDP" ] || [ $PRIMARY_MONITOR == "eDP-1" ]; then
     echo "Laptop primary"
-    polybar laptop &
-  else
-    echo "Laptop not primary"
     polybar main &
   fi
 fi

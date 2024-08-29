@@ -59,7 +59,7 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 
 [bar/desktop]
-monitor = ${env:PRIMARY_MONITOR:DP-4}
+monitor = ${env:PRIMARY_MONITOR:eDP-1}
 inherit = base
 modules-left = bspwm
 modules-center = xwindow
@@ -69,16 +69,8 @@ tray-position = right
 tray-padding = 2
 tray-max-size = 24
 
-[bar/laptop]
-monitor = ${env:PRIMARY_MONITOR:eDP-1}
-inherit = base
-
-modules-left = bspwm
-modules-center = xwindow
-modules-right = date
-
-[bar/side]
-monitor = HDMI-1-1
+[bar/secondary]
+monitor = ${env:SECONDARY_MONITOR:eDP-1}
 inherit = base
 
 modules-left = bspwm
