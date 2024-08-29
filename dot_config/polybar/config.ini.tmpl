@@ -70,7 +70,7 @@ tray-padding = 2
 tray-max-size = 24
 
 [bar/laptop]
-monitor = eDP
+monitor = ${env:PRIMARY_MONITOR:eDP-1}
 inherit = base
 
 modules-left = bspwm
