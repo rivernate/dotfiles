@@ -81,58 +81,26 @@ fi
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
 ##
-# Start Antigen Block
+# Start Antidote Block
 ##
 #
 {{ if eq .chezmoi.os "darwin" -}}
-source $(brew --prefix)/share/antigen/antigen.zsh
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
 {{- end }}
 
-if [ -f "${HOME}/antigen.zsh" ]; then
-  source "${HOME}/antigen.zsh"
-elif [ -f /usr/share/zsh/share/antigen.zsh ]; then
-  source /usr/share/zsh/share/antigen.zsh
-elif [ -f /usr/local/share/antigen/antigen.zsh ]; then
-  source /usr/local/share/antigen/antigen.zsh
+if [ -f "${HOME}/.antidote/antidote.zsh" ]; then
+  source "${HOME}/.antidote/antidote.zsh"
+elif [ -f /usr/share/zsh/share/antidote.zsh ]; then
+  source /usr/share/zsh/share/antidote.zsh
+elif [ -f /usr/local/share/antidote/antidote.zsh ]; then
+  source /usr/local/share/antidote/antidote.zsh
 fi
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
-
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle command-not-found
-
-# Additional Completions
-antigen bundle zsh-users/zsh-completions
-antigen bundle gcloud
-
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# History substring search
-antigen bundle zsh-users/zsh-history-substring-search
-
-# Auto Suggestions
-antigen bundle zsh-users/zsh-autosuggestions
-
-# Auto update antigen
-antigen bundle unixorn/autoupdate-antigen.zshplugin
-
-# You Should Use
-antigen bundle MichaelAquilina/zsh-you-should-use
-
-# Dotenv
-antigen bundle dotenv
-
-#P10k theme
-#antigen theme romkatv/powerlevel10k
-
-# Tell Antigen that you're done.
-antigen apply
+# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+antidote load
 
 ##
-# End Antigen Block
+# End Antidote Block
 ##
 
 ##

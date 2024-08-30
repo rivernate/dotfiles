@@ -1,0 +1,15 @@
+# .zsh_plugins.txt - comments begin with "#"
+
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/command-not-found
+ohmyzsh/ohmyzsh path:plugins/dotenv
+ohmyzsh/ohmyzsh path:plugins/gcloud
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/magic-enter
+
+zsh-users/zsh-completions
+zsh-users/zsh-history-substring-search
+#zsh-users/zsh-autosuggestions
+#MichaelAquilina/zsh-you-should-use
