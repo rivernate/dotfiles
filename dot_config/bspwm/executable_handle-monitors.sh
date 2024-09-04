@@ -36,6 +36,9 @@ configure_monitors() {
 configure_monitors
 
 # Listen for monitor changes and reconfigure when a change is detected
-bspc subscribe monitor | while read -r _; do
-  configure_monitors
+bspc subscribe monitor | while read -r line; do
+  event=$(echo "$line" | awk '{print $1}')  # Extract the event type
+  if [[ "$event" == "monitor_add" || "$event" == "monitor_remove" ]]; then
+    configure_monitors
+  fi
 done
