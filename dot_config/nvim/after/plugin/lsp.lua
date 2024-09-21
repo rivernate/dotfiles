@@ -182,7 +182,16 @@ require("mason-lspconfig").setup_handlers({
   ["rust_analyzer"] = function()
     lspconfig.rust_analyzer.setup(config({
       settings = {
-        ["rust_analyzer"] = {}
+        ["rust_analyzer"] = {
+          procMacro = {
+            ignored = {
+              leptos_macro = {
+                "component",
+                "server",
+              }
+            }
+          }
+        }
       }
     }))
   end,
