@@ -11,3 +11,5 @@ pnpm 8.7.6
 deno 1.38.5
 java openjdk-18
 lua 5.4.7
+ocaml 5.2.0
+opam 2.2.1
