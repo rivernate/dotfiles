@@ -29,5 +29,9 @@ autolock -time 50 -locker 'i3lock --nofork' &
 xss-lock --transfer-sleep-lock -- i3lock --nofork &
 export SXHKD_SHELL="sh"
 
+{{ if .work -}}
+~/Applications/dr-sprinto.AppImage --no-sandbox &
+{{- end }}
+
 # Start sxhkd with logging
 exec sxhkd -r ~/.log/sxhkd.log &
