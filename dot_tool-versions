@@ -13,3 +13,4 @@ java openjdk-18
 lua 5.4.7
 ocaml 5.2.0
 opam 2.2.1
+terraform 1.5.7
