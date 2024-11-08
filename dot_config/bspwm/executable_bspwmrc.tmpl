@@ -17,6 +17,8 @@ bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
 bspc config merge_overlapping_monitors true
 
+# Start sxhkd with logging
+exec sxhkd -r ~/.log/sxhkd.log &
 # Monitor change detection and handling
 ~/.config/bspwm/handle-monitors.sh &
 
@@ -30,8 +32,6 @@ xss-lock --transfer-sleep-lock -- i3lock --nofork &
 export SXHKD_SHELL="sh"
 
 {{ if .work -}}
-~/Applications/dr-sprinto.AppImage --no-sandbox &
+~/AppImages/gearlever_drsprinto_c7f968.appimage --no-sandbox &
 {{- end }}
 
-# Start sxhkd with logging
-exec sxhkd -r ~/.log/sxhkd.log &
