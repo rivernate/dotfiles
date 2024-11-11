@@ -190,11 +190,6 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 export PATH="${HOME}/.cargo/bin:${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-# go
-export GOPATH=$(asdf where golang)/packages
-export GOROOT=$(asdf where golang)/go
-export PATH="${PATH}:$(go env GOPATH)/bin"
-
 # SBT Config
 export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
 
@@ -263,6 +258,14 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 ###########################
 # End asdf setup
 ###########################
+
+###########################
+# GO
+###########################
+export GOPATH=$(asdf where golang)/packages
+export GOROOT=$(asdf where golang)/go
+export PATH="${PATH}:$(go env GOPATH)/bin"
+
 
 ###########################
 # direnv (direnv.net)
