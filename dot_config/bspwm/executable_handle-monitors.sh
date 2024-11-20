@@ -22,18 +22,25 @@ configure_monitors() {
 
   # Detect internal monitor
   INTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -E "^eDP|^LVDS")
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Detected internal monitor: $INTERNAL_MONITOR" >> "$LOG_FILE"
+
 
   # Detect external monitor (prefer the preferred port)
   EXTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep "$PREFERRED_PORT")
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Detected preferred external monitor: $EXTERNAL_MONITOR" >> "$LOG_FILE"
+
 
   # If preferred port is not connected, check for any other external monitor
   if [ -z "$EXTERNAL_MONITOR" ]; then
-    EXTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -v "^$INTERNAL_MONITOR" | head -n 1)
+    EXTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -v "^$INTERNAL_MONITOR" | grep -v "disconnected" | head -n 1)
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Fallback external monitor: $EXTERNAL_MONITOR" >> "$LOG_FILE"
   fi
 
   if [ -n "$EXTERNAL_MONITOR" ]; then
     # External monitor is connected
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - External monitor connected: $EXTERNAL_MONITOR" >> "$LOG_FILE"
     if [ "$MODE" != "docked" ]; then
+       echo "$(date '+%Y-%m-%d %H:%M:%S') - Switching to docked mode." >> "$LOG_FILE"
       {
         xrandr --output "$INTERNAL_MONITOR" --auto \
                --output "$EXTERNAL_MONITOR" --mode "$PREFERRED_RESOLUTION" --rate "$PREFERRED_RATE" --right-of "$INTERNAL_MONITOR" --primary
@@ -52,15 +59,19 @@ configure_monitors() {
       } >> "$LOG_FILE" 2>&1
     fi
   else
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - No external monitor connected." >> "$LOG_FILE"
     # Only internal monitor is connected
     if [ "$MODE" != "laptop" ]; then
+      echo "$(date '+%Y-%m-%d %H:%M:%S') - Switching to laptop mode." >> "$LOG_FILE"
       {
         xrandr --output "$INTERNAL_MONITOR" --auto --primary
 
-        # Turn off external monitor if variable is not empty
-        if [ -n "$EXTERNAL_MONITOR" ]; then
-          xrandr --output "$EXTERNAL_MONITOR" --off
-        fi
+        # Turn off all disconnected monitors
+        DISCONNECTED_MONITORS=$(xrandr | awk '/disconnected/ {print $1}')
+        for MONITOR in $DISCONNECTED_MONITORS; do
+          echo "$(date '+%Y-%m-%d %H:%M:%S') - Turning off disconnected monitor: $MONITOR" >> "$LOG_FILE"
+          xrandr --output "$MONITOR" --off
+        done
 
         # Set top padding and assign workspaces for laptop mode
         bspc config top_padding 20
@@ -93,9 +104,9 @@ while true; do
   INTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -E "^eDP|^LVDS")
 
   # Detect current external monitor
-  CURRENT_EXTERNAL=$(xrandr | awk '/ connected/{print $1}' | grep "$PREFERRED_PORT")
+  CURRENT_EXTERNAL=$(xrandr | awk '/ connected /{print $1}' | grep "$PREFERRED_PORT")
   if [ -z "$CURRENT_EXTERNAL" ]; then
-    CURRENT_EXTERNAL=$(xrandr | awk '/ connected/{print $1}' | grep -v "^$INTERNAL_MONITOR" | head -n 1)
+    CURRENT_EXTERNAL=$(xrandr | awk '/ connected /{print $1}' | grep -v "disconnected" | grep -v "^$INTERNAL_MONITOR" | head -n 1)
   fi
 
   # Determine if reconfiguration is needed
