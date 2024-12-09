@@ -98,6 +98,9 @@ trap "cleanup" INT TERM EXIT
 # Initial configuration
 configure_monitors
 
+## Disable the loop for now since it seems to be causing system lag
+exit 0
+
 # Persistent check for monitor changes every 5 seconds
 while true; do
   # Update internal monitor inside the loop
