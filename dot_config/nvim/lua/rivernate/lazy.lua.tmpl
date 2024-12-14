@@ -55,8 +55,17 @@ require("lazy").setup({
   {{ if .work -}}
   'Exafunction/codeium.vim',
   {{ else -}}
-  "github/copilot.vim",
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown", "codecompanion" } },
+    },
+    config = true
+  },
   {{ end -}}
+  { 'echasnovski/mini.nvim', version = false },
   {
     "bazelbuild/vim-bazel",
     dependencies = {
