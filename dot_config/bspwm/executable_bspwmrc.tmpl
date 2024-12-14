@@ -25,6 +25,7 @@ exec sxhkd -r ~/.log/sxhkd.log &
 # General system settings
 xsetroot -cursor_name left_ptr
 xset s off -dpms # Disable screen power off
+thunar --daemon &
 picom &
 dunst &
 autolock -time 50 -locker 'i3lock --nofork' &
