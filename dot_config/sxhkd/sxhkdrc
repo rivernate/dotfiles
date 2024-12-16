@@ -12,7 +12,7 @@ super + @space
 
 # make sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd
+	pkill -USR1 -x sxhkd && notify-send "sxhkd" "Configuration reloaded" -t 1000
 
 # Screen lock with enhanced security
 super + Home
