@@ -14,9 +14,9 @@ super + @space
 super + Escape
 	pkill -USR1 -x sxhkd
 
+# Screen lock with enhanced security
 super + Home
-	i3lock -i ~/.config/i3lock/tile.png -t
-
+	i3lock -i ~/.config/i3lock/tile.png -t -e -f
 
 #
 # bspwm hotkeys
@@ -135,31 +135,49 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
+#
+# desktop management
+#
 
 # create a new desktop on the current monitor
 super + plus
-        N=Temp-$RANDOM; \
-        bspc monitor -a $N; \
-        bspc desktop -f $N
+        N="temp_$(bspc query -D | wc -l)"; \
+        bspc monitor -a "$N" && \
+        bspc desktop -f "$N" && \
+        notify-send "Desktop" "Created: $N" -t 1000
 
+# remove current desktop (only if empty)
 super + minus
-       D=$(bspc query -D -d); \
-       bspc desktop -f focused:^1; \
-       bspc desktop $D -r
+        D=$(bspc query -D -d); \
+        if [ "$(bspc query -N -d focused)" = "" ]; then \
+            if [ "$(bspc query -D | wc -l)" -gt 1 ]; then \
+                bspc desktop -f focused:^1; \
+                bspc desktop "$D" -r && \
+                notify-send "Desktop" "Removed empty desktop" -t 1000; \
+            else \
+                notify-send "Error" "Cannot remove last desktop" -t 2000; \
+            fi \
+        else \
+            notify-send "Error" "Desktop not empty" -t 2000; \
+        fi
 
-# brightness control
+#
+# media controls
+#
+
+# Brightness control with dunst notification
 XF86MonBrightnessUp
-      brightnessctl set +10%
+      brightnessctl set +10% && notify-send "Brightness" "$(brightnessctl get)%" -t 1000
 
 XF86MonBrightnessDown
-      brightnessctl set 10%-
+      brightnessctl set 10%- && notify-send "Brightness" "$(brightnessctl get)%" -t 1000
 
-# volume control
+# Volume control with dunst notification
 XF86AudioMute
-      amixer set Master toggle
+      amixer set Master toggle && notify-send "Volume" "Toggled" -t 1000
 
 XF86AudioRaiseVolume
-      amixer set Master 5%+
+      amixer set Master 5%+ && notify-send "Volume" "$(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)%" -t 1000
 
 XF86AudioLowerVolume
-      amixer set Master 5%-
+      amixer set Master 5%- && notify-send "Volume" "$(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)%" -t 1000
