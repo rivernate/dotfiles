@@ -12,7 +12,7 @@ super + @space
 
 # make sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd && notify-send "sxhkd" "Configuration reloaded" -t 1000
+	pkill -USR1 -x sxhkd; notify-send "sxhkd" "Configuration reloaded" -t 1000
 
 # Screen lock with enhanced security
 super + Home
@@ -80,16 +80,15 @@ super + {grave,Tab}
 
 # focus the older or newer node in the focus history
 super + {o,i}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
+	bspc wm -h off; bspc node {older,newer} -f; bspc wm -h on
 
 # focus or send to the given desktop
 super + {_,shift + }{1-4}
-	bspc {desktop -f,node -d} {terminal, chrome, chat, camera}
+	bspc {desktop -f,node -d} {terminal,chrome,chat,camera}
 
-super + {_,shift + }{4-9,0}
-        bspc {desktop -f,node -d} $(bspc query -D --names | grep '^Temp*' | head -{1-4} | tail -n 1)
+# focus or send to temporary desktops (5-0 maps to 1st-6th temp desktop)
+super + {_,shift + }{5,6,7,8,9,0}
+        ~/.local/bin/switch_temp_desktop.sh {focus,move} {5,6,7,8,9,0} 
 
 # move desktop on current monitor or between monitors
 super + ctrl + {_,shift + }{comma,period}
@@ -141,25 +140,11 @@ super + {Left,Down,Up,Right}
 
 # create a new desktop on the current monitor
 super + plus
-        N="temp_$(bspc query -D | wc -l)"; \
-        bspc monitor -a "$N" && \
-        bspc desktop -f "$N" && \
-        notify-send "Desktop" "Created: $N" -t 1000
+        N="temp_$(($(bspc query -D --names | grep '^temp_' | sed 's/temp_//' | sort -n | tail -n1 2>/dev/null || echo 0) + 1))"; bspc monitor -a "$N"; bspc desktop -f "$N"; notify-send "Desktop" "Created: $N" -t 1000
 
 # remove current desktop (only if empty)
-super + minus
-        D=$(bspc query -D -d); \
-        if [ "$(bspc query -N -d focused)" = "" ]; then \
-            if [ "$(bspc query -D | wc -l)" -gt 1 ]; then \
-                bspc desktop -f focused:^1; \
-                bspc desktop "$D" -r && \
-                notify-send "Desktop" "Removed empty desktop" -t 1000; \
-            else \
-                notify-send "Error" "Cannot remove last desktop" -t 2000; \
-            fi \
-        else \
-            notify-send "Error" "Desktop not empty" -t 2000; \
-        fi
+super + {minus,equal}
+        D=$(bspc query -D -d focused --names); if [ "$(bspc query -N -d focused -n .window)" = "" ]; then if [ "$(bspc query -D -m focused --names | wc -l)" -gt 1 ]; then FIRST=$(bspc query -D -m focused --names | head -n 1); [ "$D" != "$FIRST" ] && bspc desktop -f "$FIRST"; bspc desktop "$D" -r; notify-send "Desktop" "Removed: $D" -t 1000; else notify-send "Error" "Cannot remove last desktop" -t 2000; fi; else notify-send "Error" "Desktop not empty" -t 2000; fi
 
 #
 # media controls
@@ -167,17 +152,17 @@ super + minus
 
 # Brightness control with dunst notification
 XF86MonBrightnessUp
-      brightnessctl set +10% && notify-send "Brightness" "$(brightnessctl get)%" -t 1000
+      brightnessctl set +10%; notify-send "Brightness" "$(brightnessctl get)%" -t 1000
 
 XF86MonBrightnessDown
-      brightnessctl set 10%- && notify-send "Brightness" "$(brightnessctl get)%" -t 1000
+      brightnessctl set 10%-; notify-send "Brightness" "$(brightnessctl get)%" -t 1000
 
 # Volume control with dunst notification
 XF86AudioMute
-      amixer set Master toggle && notify-send "Volume" "Toggled" -t 1000
+      amixer set Master toggle; notify-send "Volume" "Toggled" -t 1000
 
 XF86AudioRaiseVolume
-      amixer set Master 5%+ && notify-send "Volume" "$(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)%" -t 1000
+      amixer set Master 5%+; notify-send "Volume" "$(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)%" -t 1000
 
 XF86AudioLowerVolume
-      amixer set Master 5%- && notify-send "Volume" "$(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)%" -t 1000
+      amixer set Master 5%-; notify-send "Volume" "$(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)%" -t 1000
