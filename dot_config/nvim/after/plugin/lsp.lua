@@ -93,6 +93,24 @@ local function config(config_)
   }, config_ or {})
 end
 
+local gopls_env = {}
+local gopackagesdriver_path = './tools/gopackagesdriver.sh'
+
+local function file_exists(path)
+  local file = io.open(path, "r")
+  if file then
+    file:close()
+    return true
+  else
+    return false
+  end
+end
+
+-- Check if the GOPACKAGESDRIVER file exists
+if file_exists(gopackagesdriver_path) then
+  gopls_env.GOPACKAGESDRIVER = gopackagesdriver_path
+end
+
 -- LSP Servers Configuration
 local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup_handlers({
@@ -105,9 +123,7 @@ require("mason-lspconfig").setup_handlers({
         gopls = {
           analyses = { unusedparams = true },
           staticcheck = true,
-          env = {
-            GOPACKAGESDRIVER = './tools/gopackagesdriver.sh',
-          },
+          env = gopls_env,
           directoryFilters = {
             "-bazel-bin",
             "-bazel-out",
