@@ -2,8 +2,8 @@
 
 # Preferred DisplayPort and configuration
 PREFERRED_PORT="DisplayPort-10"
-PREFERRED_RESOLUTION="3840x2160"
-PREFERRED_RATE="60.00"
+PREFERRED_RESOLUTION="2560x1440"
+PREFERRED_RATE="144.00"
 
 # Log file location
 LOG_DIR="$HOME/.log"
