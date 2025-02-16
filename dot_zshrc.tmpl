@@ -17,11 +17,6 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 # Setup history
 HISTFILE=~/.zsh_history
 
-
-if [ -f "${HOME}/.asdf/plugins/java/set-java-home.zsh" ]; then
-. ~/.asdf/plugins/java/set-java-home.zsh
-fi
-
 # enable auto complete
 autoload -Uz compinit
 compinit
@@ -243,36 +238,21 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 [[ ! -r /Users/nathan/.opam/opam-init/init.zsh ]] || source /Users/nathan/.opam/opam-init/init.zsh > /dev/null 2> /dev/null
 
 ###########################
-# Setup asdf
-###########################
-{{ if eq (index .chezmoi.osRelease "id" ) "arch" -}}
-. /opt/asdf-vm/asdf.sh
-{{ else if eq .chezmoi.os "linux" -}}
-. "$HOME/.asdf/asdf.sh"
-. ~/.asdf/completions/asdf.bash
-. ~/.asdf/plugins/java/set-java-home.zsh
-{{- end }}
-{{ if eq .chezmoi.os "darwin" -}}
-. $(brew --prefix asdf)/libexec/asdf.sh
-. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
-{{- end }}
-
-###########################
-# End asdf setup
+# Setup mise
 ###########################
 
-###########################
-# GO
-###########################
-export GOPATH=$(asdf where golang)/packages
-export GOROOT=$(asdf where golang)/go
-export PATH="${PATH}:$(go env GOPATH)/bin"
+eval "$(~/.local/bin/mise activate zsh)"
 
+###########################
+# End mise setup
+###########################
 
 ###########################
 # direnv (direnv.net)
 ###########################
+
 eval "$(direnv hook zsh)"
+
 ###########################
 # End direnv setup
 ###########################
