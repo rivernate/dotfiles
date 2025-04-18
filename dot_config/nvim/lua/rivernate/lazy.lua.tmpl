@@ -52,9 +52,6 @@ require("lazy").setup({
     "j-hui/fidget.nvim",
     opts = {},
   },
-  {{ if .work -}}
-  'Exafunction/codeium.vim',
-  {{ else -}}
   {
     "olimorris/codecompanion.nvim",
     dependencies = {
@@ -64,7 +61,6 @@ require("lazy").setup({
     },
     config = true
   },
-  {{ end -}}
   { 'echasnovski/mini.nvim', version = false },
   {
     "bazelbuild/vim-bazel",

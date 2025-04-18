@@ -231,6 +231,15 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
 {{- end }}
 
+##########################
+# Setup Jetbrains Scripts
+##########################
+
+toolbox_dir="${XDG_DATA_HOME:-$HOME/.local/share}/JetBrains/Toolbox/scripts"
+if [[ -d $toolbox_dir && ${path[(r)$toolbox_dir]} != $toolbox_dir ]]; then
+  path=($toolbox_dir $path)
+fi
+
 ###########################
 # Setup OCaml
 ##########################
@@ -278,6 +287,12 @@ autoload -Uz yay-needed yay-sync
 
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/config.toml"
 eval "$(starship init zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/nate/google-cloud-sdk/path.zsh.inc' ]; then . '/home/nate/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/nate/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/nate/google-cloud-sdk/completion.zsh.inc'; fi
 
 {{ if .work -}}
 function dwta() {
