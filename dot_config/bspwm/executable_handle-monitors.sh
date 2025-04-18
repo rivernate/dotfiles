@@ -1,125 +1,84 @@
 #!/bin/bash
 
-# Preferred DisplayPort and configuration
-PREFERRED_PORT="DisplayPort-10"
+# Configuration
 PREFERRED_RESOLUTION="2560x1440"
 PREFERRED_RATE="144.00"
-
-# Log file location
 LOG_DIR="$HOME/.log"
 LOG_FILE="$LOG_DIR/monitor_switch.log"
+STATE_FILE="$LOG_DIR/monitor_mode.state"
 
-# Ensure the log directory exists
 mkdir -p "$LOG_DIR"
 
-# Initialize flag for configuration mode
-MODE=""
+# Detect monitors
+INTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -E "^(eDP|LVDS)" | head -n 1)
+IS_LAPTOP=false
 
-# Function to configure monitors and Polybar
-configure_monitors() {
-  # Log the time of execution
-  echo "$(date '+%Y-%m-%d %H:%M:%S') - Running configure_monitors" >> "$LOG_FILE"
+if [ -n "$INTERNAL_MONITOR" ]; then
+  IS_LAPTOP=true
+else
+  INTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | head -n 1)
+fi
 
-  # Detect internal monitor
-  INTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -E "^eDP|^LVDS")
-  echo "$(date '+%Y-%m-%d %H:%M:%S') - Detected internal monitor: $INTERNAL_MONITOR" >> "$LOG_FILE"
+CONNECTED_MONITORS=($(xrandr | awk '/ connected/{print $1}'))
+MONITOR_COUNT=${#CONNECTED_MONITORS[@]}
 
+echo "$(date '+%Y-%m-%d %H:%M:%S') - Internal monitor: $INTERNAL_MONITOR (laptop: $IS_LAPTOP)" >> "$LOG_FILE"
+echo "$(date '+%Y-%m-%d %H:%M:%S') - Connected monitors: ${CONNECTED_MONITORS[*]}" >> "$LOG_FILE"
 
-  # Detect external monitor (prefer the preferred port)
-  EXTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep "$PREFERRED_PORT")
-  echo "$(date '+%Y-%m-%d %H:%M:%S') - Detected preferred external monitor: $EXTERNAL_MONITOR" >> "$LOG_FILE"
+MODE="unknown"
 
+if [ "$MONITOR_COUNT" -eq 1 ]; then
+  MODE="single"
+else
+  MODE="multi"
+fi
 
-  # If preferred port is not connected, check for any other external monitor
-  if [ -z "$EXTERNAL_MONITOR" ]; then
-    EXTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -v "^$INTERNAL_MONITOR" | grep -v "disconnected" | head -n 1)
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Fallback external monitor: $EXTERNAL_MONITOR" >> "$LOG_FILE"
-  fi
+if $IS_LAPTOP && [ "$MODE" = "single" ]; then
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Laptop with internal screen only. Switching to laptop mode." >> "$LOG_FILE"
+  xrandr --output "$INTERNAL_MONITOR" --auto --primary
 
-  if [ -n "$EXTERNAL_MONITOR" ]; then
-    # External monitor is connected
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - External monitor connected: $EXTERNAL_MONITOR" >> "$LOG_FILE"
-    if [ "$MODE" != "docked" ]; then
-       echo "$(date '+%Y-%m-%d %H:%M:%S') - Switching to docked mode." >> "$LOG_FILE"
-      {
-        xrandr --output "$INTERNAL_MONITOR" --auto \
-               --output "$EXTERNAL_MONITOR" --mode "$PREFERRED_RESOLUTION" --rate "$PREFERRED_RATE" --right-of "$INTERNAL_MONITOR" --primary
+  bspc config top_padding 20
+  bspc monitor "$INTERNAL_MONITOR" -d terminal chrome chat camera
 
-        # Set top padding and assign workspaces for docked mode
-        bspc config top_padding 40
-        bspc monitor "$INTERNAL_MONITOR" -d chat camera
-        bspc monitor "$EXTERNAL_MONITOR" -d terminal chrome
+  ~/.config/polybar/launch.sh "$INTERNAL_MONITOR"
 
-        # Restart Polybar with docked configuration
-        ~/.config/polybar/launch.sh docked
+elif $IS_LAPTOP && [ "$MODE" = "multi" ]; then
+  EXTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -v "^$INTERNAL_MONITOR" | head -n 1)
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Laptop docked with external monitor: $EXTERNAL_MONITOR. Switching to docked mode." >> "$LOG_FILE"
 
-        # Update mode
-        MODE="docked"
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - Switched to docked mode."
-      } >> "$LOG_FILE" 2>&1
-    fi
-  else
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - No external monitor connected." >> "$LOG_FILE"
-    # Only internal monitor is connected
-    if [ "$MODE" != "laptop" ]; then
-      echo "$(date '+%Y-%m-%d %H:%M:%S') - Switching to laptop mode." >> "$LOG_FILE"
-      {
-        xrandr --output "$INTERNAL_MONITOR" --auto --primary
+  xrandr --output "$INTERNAL_MONITOR" --auto \
+         --output "$EXTERNAL_MONITOR" --mode "$PREFERRED_RESOLUTION" --rate "$PREFERRED_RATE" --right-of "$INTERNAL_MONITOR" --primary
 
-        # Turn off all disconnected monitors
-        DISCONNECTED_MONITORS=$(xrandr | awk '/disconnected/ {print $1}')
-        for MONITOR in $DISCONNECTED_MONITORS; do
-          echo "$(date '+%Y-%m-%d %H:%M:%S') - Turning off disconnected monitor: $MONITOR" >> "$LOG_FILE"
-          xrandr --output "$MONITOR" --off
-        done
+  bspc config top_padding 40
+  bspc monitor "$INTERNAL_MONITOR" -d chat camera
+  bspc monitor "$EXTERNAL_MONITOR" -d terminal chrome
 
-        # Set top padding and assign workspaces for laptop mode
-        bspc config top_padding 20
-        bspc monitor "$INTERNAL_MONITOR" -d terminal chrome chat camera
+  ~/.config/polybar/launch.sh "$EXTERNAL_MONITOR"
 
-        # Restart Polybar with laptop configuration
-        ~/.config/polybar/launch.sh laptop
+elif ! $IS_LAPTOP && [ "$MODE" = "multi" ]; then
+  PRIMARY_MONITOR="${CONNECTED_MONITORS[0]}"
+  SECONDARY_MONITOR="${CONNECTED_MONITORS[1]}"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Desktop with dual monitors: $PRIMARY_MONITOR + $SECONDARY_MONITOR" >> "$LOG_FILE"
 
-        # Update mode
-        MODE="laptop"
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - Switched to laptop mode."
-      } >> "$LOG_FILE" 2>&1
-    fi
-  fi
-}
+  xrandr --output "$PRIMARY_MONITOR" --mode "$PREFERRED_RESOLUTION" --rate "$PREFERRED_RATE" --primary \
+         --output "$SECONDARY_MONITOR" --auto --right-of "$PRIMARY_MONITOR"
 
-# Ensure background loop exits cleanly on script termination
-cleanup() {
-  echo "$(date '+%Y-%m-%d %H:%M:%S') - Cleaning up and exiting..." >> "$LOG_FILE"
-  exit 0
-}
-trap "cleanup" INT TERM EXIT
+  bspc config top_padding 40
+  bspc monitor "$PRIMARY_MONITOR" -d terminal chrome
+  bspc monitor "$SECONDARY_MONITOR" -d chat camera
 
-# Initial configuration
-configure_monitors
+  ~/.config/polybar/launch.sh "$PRIMARY_MONITOR"
 
-## Disable the loop for now since it seems to be causing system lag
+else
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Desktop with one monitor: $INTERNAL_MONITOR" >> "$LOG_FILE"
+  xrandr --output "$INTERNAL_MONITOR" --auto --primary
+
+  bspc config top_padding 20
+  bspc monitor "$INTERNAL_MONITOR" -d terminal chrome chat camera
+
+  ~/.config/polybar/launch.sh "$INTERNAL_MONITOR"
+fi
+
+echo "$MODE" > "$STATE_FILE"
+echo "$(date '+%Y-%m-%d %H:%M:%S') - Switched to $MODE mode. Cleaning up." >> "$LOG_FILE"
 exit 0
-
-# Persistent check for monitor changes every 5 seconds
-while true; do
-  # Update internal monitor inside the loop
-  INTERNAL_MONITOR=$(xrandr | awk '/ connected/{print $1}' | grep -E "^eDP|^LVDS")
-
-  # Detect current external monitor
-  CURRENT_EXTERNAL=$(xrandr | awk '/ connected /{print $1}' | grep "$PREFERRED_PORT")
-  if [ -z "$CURRENT_EXTERNAL" ]; then
-    CURRENT_EXTERNAL=$(xrandr | awk '/ connected /{print $1}' | grep -v "disconnected" | grep -v "^$INTERNAL_MONITOR" | head -n 1)
-  fi
-
-  # Determine if reconfiguration is needed
-  if [ -n "$CURRENT_EXTERNAL" ] && [ "$MODE" != "docked" ]; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - External monitor detected. Switching to docked mode." >> "$LOG_FILE"
-    configure_monitors
-  elif [ -z "$CURRENT_EXTERNAL" ] && [ "$MODE" != "laptop" ]; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - No external monitor detected. Switching to laptop mode." >> "$LOG_FILE"
-    configure_monitors
-  fi
-
-  sleep 5
-done

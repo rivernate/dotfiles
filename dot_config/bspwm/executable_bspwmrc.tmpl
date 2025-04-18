@@ -22,14 +22,18 @@ exec sxhkd -r ~/.log/sxhkd.log &
 # Monitor change detection and handling
 ~/.config/bspwm/handle-monitors.sh &
 
+# Start GNOME Keyring Daemon
+eval "$(gnome-keyring-daemon --start --components=ssh,secrets)"
+export SSH_AUTH_SOCK
+
 # General system settings
 xsetroot -cursor_name left_ptr
 xset s off -dpms # Disable screen power off
 thunar --daemon &
 picom &
 dunst &
-autolock -time 50 -locker 'i3lock --nofork' &
-xss-lock --transfer-sleep-lock -- i3lock --nofork &
+xautolock -time 15 -locker 'betterlockscreen -l dim' &
+xss-lock --transfer-sleep-lock -- betterlockscreen -l dim &
 export SXHKD_SHELL="sh"
 
 {{ if .work -}}
