@@ -88,7 +88,7 @@ super + {_,shift + }{1-4}
 
 # focus or send to temporary desktops (5-0 maps to 1st-6th temp desktop)
 super + {_,shift + }{5,6,7,8,9,0}
-        ~/.local/bin/switch_temp_desktop.sh {focus,move} {5,6,7,8,9,0} 
+        ~/.local/bin/switch_temp_desktop.sh {focus,move} {5,6,7,8,9,0}
 
 # move desktop on current monitor or between monitors
 super + ctrl + {_,shift + }{comma,period}
@@ -133,6 +133,14 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Rotate the focused window 90 degrees clockwise
+super + ctrl + r
+	bspc node @/ -R 90
+
+# Rotate the focused window 90 degrees counterclockwise
+super + ctrl + shift + r
+	bspc node @/ -R 270
 
 #
 # desktop management
