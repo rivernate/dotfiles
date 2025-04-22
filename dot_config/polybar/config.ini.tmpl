@@ -44,7 +44,7 @@ scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
 [bar/main]
-monitor = ${env:PRIMARY_MONITOR:eDP-1}
+monitor = ${env:MONITOR:}
 inherit = base
 
 modules-left = bspwm
@@ -59,7 +59,7 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 
 [bar/desktop]
-monitor = ${env:PRIMARY_MONITOR:eDP-1}
+monitor = ${env:MONITOR:}
 inherit = base
 modules-left = bspwm
 modules-center = xwindow
@@ -70,7 +70,7 @@ tray-padding = 2
 tray-max-size = 24
 
 [bar/secondary]
-monitor = ${env:SECONDARY_MONITOR:eDP-1}
+monitor = ${env:MONITOR:}
 inherit = base
 
 modules-left = bspwm
