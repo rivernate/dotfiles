@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# 1) Which outputs?
+export PRIMARY_MONITOR="DP-0"
+export SECONDARY_MONITOR="HDMI-0"
+
+# 2) Fire off your unified launch script (polybar + wallpaper)
+~/.config/polybar/launch.sh
+
+# 3) tweak bspwm for two‑monitor “docked” mode
+bspc config top_padding 40
+bspc monitor "$PRIMARY_MONITOR"   -d terminal chrome
+bspc monitor "$SECONDARY_MONITOR" -d chat camera

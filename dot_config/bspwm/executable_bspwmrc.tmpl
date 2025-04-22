@@ -19,8 +19,9 @@ bspc config merge_overlapping_monitors true
 
 # Start sxhkd with logging
 exec sxhkd -r ~/.log/sxhkd.log &
-# Monitor change detection and handling
-~/.config/bspwm/handle-monitors.sh &
+
+# Detect montors using autorandr
+autorandr --change &
 
 # Start GNOME Keyring Daemon
 eval "$(gnome-keyring-daemon --start --components=ssh,secrets)"
