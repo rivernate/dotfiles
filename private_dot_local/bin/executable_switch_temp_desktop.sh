@@ -7,7 +7,7 @@ KEY=$2
 ACTION=$1
 
 # Debug output
-notify-send "Debug" "Key: $KEY, Action: $ACTION" -t 2000
+#notify-send "Debug" "Key: $KEY, Action: $ACTION" -t 2000
 
 # Convert input number (5-9,0) to desktop number (0-5) and corresponding temp number (1-6)
 case "$KEY" in
