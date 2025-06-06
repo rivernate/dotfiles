@@ -16,7 +16,8 @@ require("mason").setup({
     },
   },
 })
-require("mason-lspconfig").setup({
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup({
   automatic_installation = false,
 })
 require("mason-null-ls").setup({
@@ -113,10 +114,10 @@ end
 
 -- LSP Servers Configuration
 local lspconfig = require("lspconfig")
-require("mason-lspconfig").setup_handlers({
-  function(server_name) -- Default handler
-    lspconfig[server_name].setup(config())
-  end,
+
+-- Per-server setup functions:
+local handlers = {
+  -- gopls: custom settings + env + directoryFilters
   ["gopls"] = function()
     lspconfig.gopls.setup(config({
       settings = {
@@ -133,6 +134,8 @@ require("mason-lspconfig").setup_handlers({
       },
     }))
   end,
+
+  -- lua_ls: runtime, diagnostics, workspace library, telemetry off
   ["lua_ls"] = function()
     lspconfig.lua_ls.setup(config({
       settings = {
@@ -141,15 +144,21 @@ require("mason-lspconfig").setup_handlers({
             version = "LuaJIT",
             path = vim.split(package.path, ";"),
           },
-          diagnostics = { globals = { "vim", "use" } },
+          diagnostics = {
+            globals = { "vim", "use" },
+          },
           workspace = {
             library = vim.api.nvim_get_runtime_file("", true),
           },
-          telemetry = { enable = false },
+          telemetry = {
+            enable = false,
+          },
         },
       },
     }))
   end,
+
+  -- rust_analyzer: procMacro ignores for certain macros
   ["rust_analyzer"] = function()
     lspconfig.rust_analyzer.setup(config({
       settings = {
@@ -163,25 +172,31 @@ require("mason-lspconfig").setup_handlers({
       },
     }))
   end,
+
+  -- cssls: validate + lint / unknownAtRules=ignore
   ["cssls"] = function()
     lspconfig.cssls.setup(config({
       settings = {
-        css = { validate = true, lint = { unknownAtRules = "ignore" } },
+        css =  { validate = true, lint = { unknownAtRules = "ignore" } },
         scss = { validate = true, lint = { unknownAtRules = "ignore" } },
         less = { validate = true, lint = { unknownAtRules = "ignore" } },
       },
     }))
   end,
+
+  -- jsonls: hook up schemastore + enable validation
   ["jsonls"] = function()
     lspconfig.jsonls.setup(config({
       settings = {
         json = {
-          schemas = require("schemastore").json.schemas(),
+          schemas  = require("schemastore").json.schemas(),
           validate = { enable = true },
         },
       },
     }))
   end,
+
+  -- yamlls: turn off key ordering check
   ["yamlls"] = function()
     lspconfig.yamlls.setup(config({
       settings = {
@@ -189,7 +204,21 @@ require("mason-lspconfig").setup_handlers({
       },
     }))
   end,
-})
+}
+
+-- Default handler: any installed server not in `handlers` falls back here.
+local function default_handler(server_name)
+  lspconfig[server_name].setup(config())
+end
+
+-- Loop over all installed servers and invoke the correct function:
+for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
+  if handlers[server_name] then
+    handlers[server_name]()
+  else
+    default_handler(server_name)
+  end
+end
 
 -- Snippet Loader
 local function snippets_paths()
