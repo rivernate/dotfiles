@@ -5,4 +5,13 @@ The dotfiles are managed by [chezmoi](https://www.chezmoi.io/user-guide/setup/#u
 ## Setup
 To setup a new machine using these dotfiles run:
 
-`sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply rivernate`
+```bash
+sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply rivernate
+```
+
+## PHP Deps
+
+```bash
+yay -S re2c gd oniguruma unzip zip postgresql maria-db-clients libzi
+```
+
