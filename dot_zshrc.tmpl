@@ -195,6 +195,11 @@ alias ssh='TERM=xterm-256color ssh'
 
 fpath=(~/.zsh/completion ~/.zsh/funcs $fpath)
 
+# git-extras completion
+if [ -r /usr/share/doc/git-extras/git-extras-completion.zsh ]; then
+  source /usr/share/doc/git-extras/git-extras-completion.zsh
+fi
+
 {{ if eq .chezmoi.os "darwin" -}}
 
 ###########################
