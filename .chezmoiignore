@@ -1,5 +1,8 @@
 tags
 README.md
+CLAUDE.md
+.config/autorandr/*/config
+.config/autorandr/*/setup
 {{- if not .bspwm }}
 .config/bspwm
 .config/polybar
