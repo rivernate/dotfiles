@@ -9,6 +9,7 @@
 	default = current
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = delta
 [include]
         path = ~/.gitconfigoverride
 [pull]
@@ -33,4 +34,14 @@
 	helper = !/opt/homebrew/bin/gh auth git-credential
   {{ else if eq .chezmoi.os "linux" -}}
   helper = !/usr/bin/gh auth git-credential
-  {{ end -}}
+  {{ end }}
+[credential]
+	helper = store
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = side-by-side line-numbers decorations
+	syntax-theme = Monokai Extended
+	navigate = true
+	line-numbers = true
+	side-by-side = true
